@@ -1,0 +1,43 @@
+{
+  "name": "Compass — deep purple institutional",
+  "dataColors": [
+    "#3C1053",
+    "#8C4799",
+    "#C9A227",
+    "#2E7D6E",
+    "#D63A3A",
+    "#5B6770",
+    "#4B3F72",
+    "#A85C98"
+  ],
+  "good": "#2E7D6E",
+  "neutral": "#C9A227",
+  "bad": "#D63A3A",
+  "background": "#FFFFFF",
+  "foreground": "#231F20",
+  "tableAccent": "#3C1053",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "fontColor": { "solid": { "color": "#3C1053" } },
+            "fontSize": 12,
+            "bold": true
+          }
+        ],
+        "background": [{ "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [{ "fontSize": 24, "color": { "solid": { "color": "#3C1053" } } }],
+        "categoryLabels": [{ "fontSize": 10, "color": { "solid": { "color": "#5B6770" } } }]
+      }
+    }
+  },
+  "textClasses": {
+    "title": { "fontFace": "Segoe UI Semibold", "fontSize": 13, "color": "#3C1053" },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#231F20" }
+  }
+}

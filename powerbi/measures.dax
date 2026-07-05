@@ -1,0 +1,94 @@
+-- Compass measure library. Create a blank table named 'Measures' (Enter Data)
+-- and add these. Definitions follow docs/data-dictionary.md.
+
+Headcount = DISTINCTCOUNT ( fact_enrolment[student_id] )
+
+EFTSL Certified = SUM ( fact_enrolment[eftsl_certified] )
+
+EFTSL Passed = SUM ( fact_enrolment[eftsl_passed] )
+
+Success Rate = DIVIDE ( [EFTSL Passed], [EFTSL Certified] )
+
+Average Mark =
+CALCULATE (
+    AVERAGE ( fact_enrolment[mark] ),
+    fact_enrolment[mark] >= 0, fact_enrolment[mark] <= 100
+)
+
+Pre-Census Withdrawals =
+CALCULATE (
+    COUNTROWS ( fact_enrolment ),
+    fact_enrolment[enrolment_status] = "Withdrawn pre-census"
+)
+
+-- ---------------------------------------------------------------- alerts --
+Alerts Raised = COUNTROWS ( fact_alert )
+
+Alerts Actioned =
+CALCULATE (
+    COUNTROWS ( fact_alert ),
+    fact_alert[lifecycle_status] IN { "Actioned - case opened", "Covered by same-term case" }
+)
+
+Alert Action Rate = DIVIDE ( [Alerts Actioned], [Alerts Raised] )
+
+Median Days To Action = MEDIAN ( fact_alert[days_to_action] )
+
+Open Alerts (Current Term) =
+CALCULATE (
+    COUNTROWS ( fact_alert ),
+    fact_alert[lifecycle_status] = "Open - awaiting triage",
+    RELATED ( dim_term[is_current] ) = TRUE()
+)
+
+P1 Students =
+CALCULATE (
+    DISTINCTCOUNT ( mart_triage_current[student_id] ),
+    LEFT ( mart_triage_current[priority_tier], 2 ) = "P1"
+)
+
+Students On Triage List = DISTINCTCOUNT ( mart_triage_current[student_id] )
+
+-- ----------------------------------------------------------------- cases --
+Cases Opened = COUNTROWS ( fact_case )
+
+Reach Rate =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( fact_case ),
+        SEARCH ( "Reached", fact_case[contact_outcome], 1, 0 ) > 0 ),
+    CALCULATE ( COUNTROWS ( fact_case ), fact_case[source] = "Early alert" )
+)
+
+Median Days Case Open = MEDIAN ( fact_case[days_open] )
+
+-- ------------------------------------------------------------------- NBF --
+NBF Indicative Funding = SUM ( mart_nbf_funding[indicative_funding] )
+
+NBF Commencing Students = SUM ( mart_nbf_funding[commencing_students] )
+
+NBF Support Coverage =
+DIVIDE (
+    SUM ( mart_nbf_funding[students_with_support_case] ),
+    SUM ( mart_nbf_funding[commencing_students] )
+)
+
+-- -------------------------------------------------------------- retention --
+Retention Rate (cohort mart) = AVERAGE ( mart_retention_cohort[retention_rate] )
+
+Retention Gap vs Non-Equity =
+VAR NonEq =
+    CALCULATE (
+        AVERAGE ( mart_retention_cohort[retention_rate] ),
+        mart_retention_cohort[cohort] = "Non-equity",
+        REMOVEFILTERS ( mart_retention_cohort[cohort] )
+    )
+RETURN AVERAGE ( mart_retention_cohort[retention_rate] ) - NonEq
+
+-- ------------------------------------------------------------- engagement --
+Avg Weekly Logins = AVERAGE ( fact_engagement_week[logins] )
+
+Missed Item Rate =
+DIVIDE (
+    SUM ( fact_engagement_week[missed] ),
+    SUM ( fact_engagement_week[items_due] )
+)

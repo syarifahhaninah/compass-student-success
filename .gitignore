@@ -1,0 +1,21 @@
+# Generated data — reproduce with generator/generate.py + etl/run_etl.py
+data/raw/
+data/warehouse/
+data/quality/
+
+# Python
+.venv/
+__pycache__/
+generator/__pycache__/
+*.pyc
+
+# DuckDB scratch
+*.duckdb
+*.duckdb.wal
+
+# Power BI local temp
+*.pbix.bak
+
+# OS
+Thumbs.db
+Desktop.ini
