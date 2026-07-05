@@ -129,7 +129,11 @@ MEASURES = {
         ("Headcount", "DISTINCTCOUNT(fact_enrolment[student_id])", "#,0"),
         ("EFTSL Certified", "SUM(fact_enrolment[eftsl_certified])", "#,0.0"),
         ("EFTSL Passed", "SUM(fact_enrolment[eftsl_passed])", "#,0.0"),
-        ("Success Rate", "DIVIDE([EFTSL Passed], [EFTSL Certified])", "0.0%"),
+        # In-progress units are certified load but have no outcome yet, so the
+        # success-rate denominator excludes them (else current term reads ~0%).
+        ("Success Rate",
+         'DIVIDE([EFTSL Passed], CALCULATE(SUM(fact_enrolment[eftsl_certified]), fact_enrolment[grade] <> "IP"))',
+         "0.0%"),
         ("Average Mark",
          'CALCULATE(AVERAGE(fact_enrolment[mark]), fact_enrolment[mark] >= 0, fact_enrolment[mark] <= 100)',
          "0.0"),

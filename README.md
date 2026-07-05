@@ -91,6 +91,19 @@ per [powerbi/page-guide.md](powerbi/page-guide.md)). If Desktop rejects the
 generated project, fall back to the manual load in
 [powerbi/model-spec.md](powerbi/model-spec.md).
 
+## The dashboards
+
+Built as code (`powerbi/build_report.py` emits every visual with its semantic
+query) and rendered in Power BI Desktop against the loaded model.
+
+| Page | The question it answers |
+|---|---|
+| ![Executive](powerbi/screenshots/01-executive.png) | **Executive** — how are our students going? 89.2% success rate, on-campus vs online gap, program matrix |
+| ![Equity & NBF](powerbi/screenshots/02-equity-nbf.png) | **Equity & NBF** — $1.68M indicative 2026 funding by cohort; retention gaps in context; SEHEEF acquittal matrix generated from case data |
+| ![Advisor triage](powerbi/screenshots/03-advisor-triage.png) | **Advisor triage** — 4,096 students tiered P1–P4 with plain-language reasons; RLS-scoped caseloads |
+| ![Effectiveness](powerbi/screenshots/04-effectiveness.png) | **Intervention effectiveness** — matched +4.9pp vs naive +3.4pp; method validated against injected ground truth |
+| ![Data quality](powerbi/screenshots/05-data-quality.png) | **Data quality** — every validation finding, quarantine counts, 100% catch rate vs the injected answer key |
+
 ## Honest limitations
 
 - Synthetic behaviour is simpler than reality: engagement is simulated weekly (real Canvas Data 2 is event-level), and the intervention effect is *injected* at a known magnitude — deliberately, so the evaluation method can be validated against ground truth.

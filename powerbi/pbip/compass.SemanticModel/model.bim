@@ -813,7 +813,7 @@
           },
           {
             "name": "Success Rate",
-            "expression": "DIVIDE([EFTSL Passed], [EFTSL Certified])",
+            "expression": "DIVIDE([EFTSL Passed], CALCULATE(SUM(fact_enrolment[eftsl_certified]), fact_enrolment[grade] <> \"IP\"))",
             "formatString": "0.0%",
             "lineageTag": "e50baa34-6f8a-4a75-8ea7-cc40b01b0fd9"
           },
