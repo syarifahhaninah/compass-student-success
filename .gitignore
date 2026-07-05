@@ -17,6 +17,10 @@ generator/__pycache__/
 *.pbix.bak
 powerbi/pbip/**/.pbi/
 
+# Video output (link from README instead of committing media)
+powerbi/video/*.mp4
+powerbi/video/*.log
+
 # OS
 Thumbs.db
 Desktop.ini

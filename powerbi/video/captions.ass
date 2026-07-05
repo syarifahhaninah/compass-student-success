@@ -1,0 +1,30 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Segoe UI,44,&H00FFFFFF,&H000000FF,&H00000000,&HA0000000,-1,0,0,0,100,100,0,0,3,8,0,2,80,80,44,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:02.50,0:00:12.00,Cap,,0,0,0,,Compass — a student success data environment.\NBuilt by Syarifah Haninah.
+Dialogue: 0,0:00:12.50,0:00:21.50,Cap,,0,0,0,,All data is synthetic, calibrated to published sector benchmarks.\NNo real student records anywhere.
+Dialogue: 0,0:00:22.00,0:00:30.50,Cap,,0,0,0,,Executive view: 89.2% success rate — defined the Department of\NEducation way: EFTSL passed over EFTSL certified.
+Dialogue: 0,0:00:31.00,0:00:39.50,Cap,,0,0,0,,The persistent on-campus vs online gap is the story to watch\Nas online delivery grows.
+Dialogue: 0,0:00:41.50,0:00:51.50,Cap,,0,0,0,,Advisor triage: 4,096 students with active early alerts,\Ntiered P1–P4 to match caseload capacity.
+Dialogue: 0,0:00:52.00,0:01:01.50,Cap,,0,0,0,,No opaque risk scores — every alert carries plain-language\Nreasons an advisor can say out loud to the student.
+Dialogue: 0,0:01:02.00,0:01:12.50,Cap,,0,0,0,,Every alert has a lifecycle — raised, actioned, outcome — the\Nevidence chain the Support for Students Policy requires.
+Dialogue: 0,0:01:14.50,0:01:23.00,Cap,,0,0,0,,Row-level security, live: switching to the view of a single advisor...
+Dialogue: 0,0:01:26.50,0:01:43.00,Cap,,0,0,0,,...the list drops from 4,096 students to her 925, one campus group,\None caseload. Advisors see their students; managers see everything.
+Dialogue: 0,0:01:45.50,0:01:51.00,Cap,,0,0,0,,Back to the full view.
+Dialogue: 0,0:01:53.50,0:02:03.00,Cap,,0,0,0,,Needs-based Funding: $1.68M indicative funding for the 2026\Nequity cohort, broken down by category.
+Dialogue: 0,0:02:03.50,0:02:13.50,Cap,,0,0,0,,Every support case is tagged to the SEHEEF program logic at point\Nof entry — so the acquittal reporting generates itself.
+Dialogue: 0,0:02:14.00,0:02:23.50,Cap,,0,0,0,,Retention gaps are shown in demographic context —\Nnever as raw league tables.
+Dialogue: 0,0:02:26.50,0:02:37.00,Cap,,0,0,0,,Is outreach working? A naive comparison is biased, because\Nadvisors contact the hardest cases first.
+Dialogue: 0,0:02:37.50,0:02:52.00,Cap,,0,0,0,,Matched comparison recovers +4.9 points of persistence — validated\Nagainst a known effect injected into the synthetic data.
+Dialogue: 0,0:02:59.50,0:03:10.00,Cap,,0,0,0,,Data quality: every validation finding surfaced — a 100% catch\Nrate against the injected defect answer key.
+Dialogue: 0,0:03:10.50,0:03:23.00,Cap,,0,0,0,,Pipeline to dashboard, reproducible from code.\Ngithub.com/syarifahhaninah/compass-student-success
