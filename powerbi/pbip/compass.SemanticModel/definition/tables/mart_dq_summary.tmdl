@@ -1,0 +1,31 @@
+table mart_dq_summary
+	column rule_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: rule_id
+
+	column severity
+		dataType: string
+		summarizeBy: none
+		sourceColumn: severity
+
+	column table_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: table_name
+
+	column issues
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: issues
+
+	partition mart_dq_summary = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\mart_dq_summary.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"rule_id", "severity", "table_name", "issues"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"rule_id", type text}, {"severity", type text}, {"table_name", type text}, {"issues", Int64.Type}})
+				in
+					Typed

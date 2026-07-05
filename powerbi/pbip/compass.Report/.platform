@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "compass"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "790a9eba-7416-47d0-b1f0-f1bcd77f474e"
+  }
+}

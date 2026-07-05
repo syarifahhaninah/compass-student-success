@@ -81,9 +81,15 @@ pip install -r requirements.txt
 python generator/generate.py          # writes data/raw/
 python etl/run_etl.py                 # writes data/warehouse/ + data/quality/
 python etl/validate_output.py         # sanity-check rates against sector benchmarks
+python etl/effectiveness.py           # naive vs matched intervention evaluation
+python powerbi/build_pbip.py          # emit the Power BI project (semantic model as code)
 ```
 
-Then open `powerbi/` and follow the build guide, or load the provided `.pbix`.
+Then open `powerbi/pbip/compass.pbip` in Power BI Desktop (tables,
+relationships, measures and RLS roles arrive pre-built; visuals are assembled
+per [powerbi/page-guide.md](powerbi/page-guide.md)). If Desktop rejects the
+generated project, fall back to the manual load in
+[powerbi/model-spec.md](powerbi/model-spec.md).
 
 ## Honest limitations
 

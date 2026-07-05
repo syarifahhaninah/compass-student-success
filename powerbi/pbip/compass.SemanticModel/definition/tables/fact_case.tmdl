@@ -1,0 +1,95 @@
+table fact_case
+	column case_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: case_id
+
+	column student_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: student_id
+
+	column term_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: term_code
+
+	column opened_date
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: opened_date
+
+	column source
+		dataType: string
+		summarizeBy: none
+		sourceColumn: source
+
+	column case_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: case_type
+
+	column seheef_activity
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seheef_activity
+
+	column seheef_life_stage
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seheef_life_stage
+
+	column advisor_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: advisor_id
+
+	column contact_channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: contact_channel
+
+	column contact_outcome
+		dataType: string
+		summarizeBy: none
+		sourceColumn: contact_outcome
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+
+	column closed_date
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: closed_date
+
+	column days_open
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: days_open
+
+	column linked_alert_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: linked_alert_id
+
+	measure 'Cases Opened' = COUNTROWS(fact_case)
+		formatString: #,0
+
+	measure 'Reach Rate' = DIVIDE(CALCULATE(COUNTROWS(fact_case), SEARCH("Reached", fact_case[contact_outcome], 1, 0) > 0), CALCULATE(COUNTROWS(fact_case), fact_case[source] = "Early alert"))
+		formatString: 0.0%
+
+	measure 'Median Days Case Open' = MEDIAN(fact_case[days_open])
+		formatString: 0.0
+
+	partition fact_case = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\fact_case.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"case_id", "student_id", "term_code", "opened_date", "source", "case_type", "seheef_activity", "seheef_life_stage", "advisor_id", "contact_channel", "contact_outcome", "status", "closed_date", "days_open", "linked_alert_id"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"case_id", type text}, {"student_id", type text}, {"term_code", type text}, {"opened_date", type date}, {"source", type text}, {"case_type", type text}, {"seheef_activity", type text}, {"seheef_life_stage", type text}, {"advisor_id", type text}, {"contact_channel", type text}, {"contact_outcome", type text}, {"status", type text}, {"closed_date", type date}, {"days_open", Int64.Type}, {"linked_alert_id", type text}})
+				in
+					Typed

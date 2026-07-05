@@ -1,0 +1,37 @@
+table mart_retention_cohort
+	column cohort
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cohort
+
+	column commencing_year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: commencing_year
+
+	column students
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: students
+
+	column retention_rate
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: retention_rate
+
+	measure 'Retention Rate' = AVERAGE(mart_retention_cohort[retention_rate])
+		formatString: 0.0%
+
+	measure 'Retention Gap vs Non-Equity' = VAR NonEq = CALCULATE(AVERAGE(mart_retention_cohort[retention_rate]), mart_retention_cohort[cohort] = "Non-equity", REMOVEFILTERS(mart_retention_cohort[cohort])) RETURN AVERAGE(mart_retention_cohort[retention_rate]) - NonEq
+		formatString: +0.0%;-0.0%;0.0%
+
+	partition mart_retention_cohort = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\mart_retention_cohort.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"cohort", "commencing_year", "students", "retention_rate"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"cohort", type text}, {"commencing_year", Int64.Type}, {"students", Int64.Type}, {"retention_rate", type number}})
+				in
+					Typed

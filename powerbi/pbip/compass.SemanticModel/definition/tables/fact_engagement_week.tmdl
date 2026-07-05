@@ -1,0 +1,67 @@
+table fact_engagement_week
+	column student_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: student_id
+
+	column term_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: term_code
+
+	column week_number
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: week_number
+
+	column week_start
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: week_start
+
+	column logins
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: logins
+
+	column page_views
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: page_views
+
+	column items_due
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: items_due
+
+	column submitted_on_time
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: submitted_on_time
+
+	column submitted_late
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: submitted_late
+
+	column missed
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: missed
+
+	measure 'Avg Weekly Logins' = AVERAGE(fact_engagement_week[logins])
+		formatString: 0.0
+
+	measure 'Missed Item Rate' = DIVIDE(SUM(fact_engagement_week[missed]), SUM(fact_engagement_week[items_due]))
+		formatString: 0.0%
+
+	partition fact_engagement_week = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\fact_engagement_week.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"student_id", "term_code", "week_number", "week_start", "logins", "page_views", "items_due", "submitted_on_time", "submitted_late", "missed"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"student_id", type text}, {"term_code", type text}, {"week_number", Int64.Type}, {"week_start", type date}, {"logins", Int64.Type}, {"page_views", Int64.Type}, {"items_due", Int64.Type}, {"submitted_on_time", Int64.Type}, {"submitted_late", Int64.Type}, {"missed", Int64.Type}})
+				in
+					Typed

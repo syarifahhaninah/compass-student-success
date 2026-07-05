@@ -1,0 +1,26 @@
+table dim_campus
+	column campus_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: campus_code
+
+	column campus_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: campus_name
+
+	column state
+		dataType: string
+		summarizeBy: none
+		sourceColumn: state
+
+	partition dim_campus = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\dim_campus.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"campus_code", "campus_name", "state"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"campus_code", type text}, {"campus_name", type text}, {"state", type text}})
+				in
+					Typed

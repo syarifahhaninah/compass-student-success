@@ -1,0 +1,51 @@
+table mart_seheef_activity
+	column year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: year
+
+	column seheef_activity
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seheef_activity
+
+	column seheef_life_stage
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seheef_life_stage
+
+	column case_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: case_type
+
+	column nbf_equity_cohort
+		dataType: string
+		summarizeBy: none
+		sourceColumn: nbf_equity_cohort
+
+	column cases
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: cases
+
+	column students
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: students
+
+	column reach_rate
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: reach_rate
+
+	partition mart_seheef_activity = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\mart_seheef_activity.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"year", "seheef_activity", "seheef_life_stage", "case_type", "nbf_equity_cohort", "cases", "students", "reach_rate"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"year", Int64.Type}, {"seheef_activity", type text}, {"seheef_life_stage", type text}, {"case_type", type text}, {"nbf_equity_cohort", type text}, {"cases", Int64.Type}, {"students", Int64.Type}, {"reach_rate", type number}})
+				in
+					Typed

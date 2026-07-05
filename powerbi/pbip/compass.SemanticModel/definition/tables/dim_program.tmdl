@@ -1,0 +1,26 @@
+table dim_program
+	column program_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: program_code
+
+	column program_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: program_name
+
+	column field
+		dataType: string
+		summarizeBy: none
+		sourceColumn: field
+
+	partition dim_program = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\dim_program.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"program_code", "program_name", "field"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"program_code", type text}, {"program_name", type text}, {"field", type text}})
+				in
+					Typed

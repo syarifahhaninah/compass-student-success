@@ -1,0 +1,55 @@
+table mart_nbf_funding
+	column commencing_year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: commencing_year
+
+	column nbf_category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: nbf_category
+
+	column indicative_rate
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: indicative_rate
+
+	column commencing_students
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: commencing_students
+
+	column indicative_funding
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: indicative_funding
+
+	column students_with_support_case
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: students_with_support_case
+
+	column support_coverage
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: support_coverage
+
+	measure 'NBF Indicative Funding' = SUM(mart_nbf_funding[indicative_funding])
+		formatString: "$"#,0
+
+	measure 'NBF Commencing Students' = SUM(mart_nbf_funding[commencing_students])
+		formatString: #,0
+
+	measure 'NBF Support Coverage' = DIVIDE(SUM(mart_nbf_funding[students_with_support_case]), SUM(mart_nbf_funding[commencing_students]))
+		formatString: 0.0%
+
+	partition mart_nbf_funding = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\mart_nbf_funding.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"commencing_year", "nbf_category", "indicative_rate", "commencing_students", "indicative_funding", "students_with_support_case", "support_coverage"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"commencing_year", Int64.Type}, {"nbf_category", type text}, {"indicative_rate", Int64.Type}, {"commencing_students", Int64.Type}, {"indicative_funding", Int64.Type}, {"students_with_support_case", Int64.Type}, {"support_coverage", type number}})
+				in
+					Typed

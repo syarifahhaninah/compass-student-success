@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "compass"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "84eb547a-f9dc-43e2-b28b-63f289a1ac2e"
+  }
+}

@@ -1,0 +1,36 @@
+table dim_unit
+	column unit_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: unit_code
+
+	column unit_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: unit_name
+
+	column program_code
+		dataType: string
+		summarizeBy: none
+		sourceColumn: program_code
+
+	column year_level
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: year_level
+
+	column eftsl
+		dataType: double
+		summarizeBy: none
+		sourceColumn: eftsl
+
+	partition dim_unit = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\dim_unit.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"unit_code", "unit_name", "program_code", "year_level", "eftsl"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"unit_code", type text}, {"unit_name", type text}, {"program_code", type text}, {"year_level", Int64.Type}, {"eftsl", type number}})
+				in
+					Typed

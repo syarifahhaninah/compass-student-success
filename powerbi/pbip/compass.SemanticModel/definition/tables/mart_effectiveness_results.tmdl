@@ -1,0 +1,36 @@
+table mart_effectiveness_results
+	column estimator
+		dataType: string
+		summarizeBy: none
+		sourceColumn: estimator
+
+	column estimate_pp
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: estimate_pp
+
+	column ci_low_pp
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: ci_low_pp
+
+	column ci_high_pp
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: ci_high_pp
+
+	column note
+		dataType: string
+		summarizeBy: none
+		sourceColumn: note
+
+	partition mart_effectiveness_results = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\mart_effectiveness_results.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Selected = Table.SelectColumns(Promoted, {"estimator", "estimate_pp", "ci_low_pp", "ci_high_pp", "note"}),
+					Typed = Table.TransformColumnTypes(Selected, {{"estimator", type text}, {"estimate_pp", type number}, {"ci_low_pp", type number}, {"ci_high_pp", type number}, {"note", type text}})
+				in
+					Typed
