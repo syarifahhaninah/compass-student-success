@@ -13,8 +13,9 @@ generator/__pycache__/
 *.duckdb
 *.duckdb.wal
 
-# Power BI local temp
+# Power BI local temp and per-machine caches
 *.pbix.bak
+powerbi/pbip/**/.pbi/
 
 # OS
 Thumbs.db

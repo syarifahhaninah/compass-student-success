@@ -1,15 +1,17 @@
 """Generate the Compass Power BI project (PBIP) — semantic model as code.
 
 Emits powerbi/pbip/: a Power BI Desktop-openable project whose semantic model
-(TMDL) defines every warehouse table with typed columns and M source queries,
-all star-schema relationships, the measure library, and demo RLS roles.
-Report pages are created empty (named per the page guide) — visuals are
-assembled interactively in Desktop.
+(model.bim, Tabular Object Model JSON) defines every warehouse table with
+typed columns and M source queries, all star-schema relationships, the
+measure library, and demo RLS roles. Report pages are created empty (named
+per the page guide) — visuals are assembled interactively in Desktop.
+
+Format note: Desktop 2.155 (Store) expects `model.bim` inside a PBIP semantic
+model folder; the TMDL folder format required a different project flavour, so
+this generator emits the TOM JSON form Desktop asked for.
 
 Usage:  python powerbi/build_pbip.py
-Then :  open powerbi/pbip/compass.pbip in Power BI Desktop.
-If Desktop rejects the project (format versions move), fall back to the
-manual path in model-spec.md — nothing else depends on this output.
+Then :  open powerbi/pbip/compass.pbip in Power BI Desktop and Refresh.
 """
 
 import json
@@ -205,68 +207,85 @@ PAGES = ["Executive", "Equity and NBF", "Advisor triage",
          "Intervention effectiveness", "Data quality"]
 
 
-def table_tmdl(name, cols):
-    lines = [f"table {name}"]
+def m_source(name, cols):
+    sel = ", ".join(f'"{c}"' for c, _ in cols)
+    typed = ", ".join("{" + f'"{c}", {M_TYPE[t]}' + "}" for c, t in cols)
+    return [
+        "let",
+        f"    Source = Csv.Document(File.Contents(DataFolder & \"\\{name}.csv\"), "
+        "[Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+        "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+        f"    Selected = Table.SelectColumns(Promoted, {{{sel}}}),",
+        f"    Typed = Table.TransformColumnTypes(Selected, {{{typed}}})",
+        "in",
+        "    Typed",
+    ]
+
+
+def table_tom(name, cols):
+    columns = []
     for col, typ in cols:
         summarize = "none"
         if typ in (I, D) and name.startswith(("fact_", "mart_")) \
                 and (name, col) not in NO_SUM:
             summarize = "sum"
-        lines += [
-            f"\tcolumn {col}",
-            f"\t\tdataType: {typ}",
-            f"\t\tsummarizeBy: {summarize}",
-            f"\t\tsourceColumn: {col}",
-            "",
-        ]
-    for mname, dax, fmt in MEASURES.get(name, []):
-        lines.append(f"\tmeasure '{mname}' = {dax}")
-        if fmt:
-            lines.append(f"\t\tformatString: {fmt}")
-        lines.append("")
-    sel = ", ".join(f'"{c}"' for c, _ in cols)
-    typed = ", ".join("{" + f'"{c}", {M_TYPE[t]}' + "}" for c, t in cols)
-    lines += [
-        f"\tpartition {name} = m",
-        "\t\tmode: import",
-        "\t\tsource =",
-        "\t\t\t\tlet",
-        f"\t\t\t\t\tSource = Csv.Document(File.Contents(DataFolder & \"\\{name}.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
-        "\t\t\t\t\tPromoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
-        f"\t\t\t\t\tSelected = Table.SelectColumns(Promoted, {{{sel}}}),",
-        f"\t\t\t\t\tTyped = Table.TransformColumnTypes(Selected, {{{typed}}})",
-        "\t\t\t\tin",
-        "\t\t\t\t\tTyped",
-        "",
+        columns.append({
+            "name": col, "dataType": typ, "sourceColumn": col,
+            "summarizeBy": summarize,
+        })
+    table = {
+        "name": name,
+        "columns": columns,
+        "partitions": [{
+            "name": name, "mode": "import",
+            "source": {"type": "m", "expression": m_source(name, cols)},
+        }],
+    }
+    measures = [
+        {"name": mname, "expression": dax, **({"formatString": fmt} if fmt else {})}
+        for mname, dax, fmt in MEASURES.get(name, [])
     ]
-    return "\n".join(lines)
+    if measures:
+        table["measures"] = measures
+    return table
 
 
-def model_tmdl():
-    lines = [
-        "model Model",
-        "\tculture: en-US",
-        "\tdefaultPowerBIDataSourceVersion: powerBI_V3",
-        "\tsourceQueryCulture: en-AU",
-        "",
-    ]
+def model_bim():
+    roles = []
     for role, perm in ROLES.items():
-        lines.append(f"role {role}")
-        lines.append("\tmodelPermission: read")
+        r = {"name": role, "modelPermission": "read"}
         if perm:
-            lines.append(f"\ttablePermission {perm[0]} = {perm[1]}")
-        lines.append("")
-    return "\n".join(lines)
-
-
-def relationships_tmdl():
-    lines = []
-    for i, (ft, fc, tt, tc) in enumerate(RELATIONSHIPS, 1):
-        lines += [f"relationship rel{i:02d}",
-                  f"\tfromColumn: {ft}.{fc}",
-                  f"\ttoColumn: {tt}.{tc}",
-                  ""]
-    return "\n".join(lines)
+            r["tablePermissions"] = [{"name": perm[0], "filterExpression": perm[1]}]
+        roles.append(r)
+    return {
+        "name": str(uuid.uuid4()),
+        "compatibilityLevel": 1567,
+        "model": {
+            "culture": "en-US",
+            "defaultPowerBIDataSourceVersion": "powerBI_V3",
+            "sourceQueryCulture": "en-AU",
+            "dataAccessOptions": {
+                "legacyRedirects": True,
+                "returnErrorValuesAsNull": True,
+            },
+            "expressions": [{
+                "name": "DataFolder",
+                "kind": "m",
+                "expression": f"\"{DATA_FOLDER}\" meta [IsParameterQuery=true, "
+                              "Type=\"Text\", IsParameterQueryRequired=true]",
+            }],
+            "tables": [table_tom(n, c) for n, c in TABLES.items()],
+            "relationships": [
+                {"name": f"rel{i:02d}", "fromTable": ft, "fromColumn": fc,
+                 "toTable": tt, "toColumn": tc}
+                for i, (ft, fc, tt, tc) in enumerate(RELATIONSHIPS, 1)
+            ],
+            "roles": roles,
+            "annotations": [
+                {"name": "__PBI_TimeIntelligenceEnabled", "value": "0"},
+            ],
+        },
+    }
 
 
 def platform_file(item_type, name):
@@ -298,7 +317,7 @@ def main():
         shutil.rmtree(OUT)
     sm = OUT / "compass.SemanticModel"
     rp = OUT / "compass.Report"
-    (sm / "definition" / "tables").mkdir(parents=True)
+    sm.mkdir(parents=True)
     rp.mkdir(parents=True)
 
     (OUT / "compass.pbip").write_text(json.dumps({
@@ -309,16 +328,7 @@ def main():
 
     (sm / ".platform").write_text(platform_file("SemanticModel", "compass"), encoding="utf-8")
     (sm / "definition.pbism").write_text(json.dumps({"version": "1.0"}), encoding="utf-8")
-    d = sm / "definition"
-    (d / "database.tmdl").write_text("database\n\tcompatibilityLevel: 1567\n", encoding="utf-8")
-    (d / "model.tmdl").write_text(model_tmdl(), encoding="utf-8")
-    (d / "expressions.tmdl").write_text(
-        f'expression DataFolder = "{DATA_FOLDER}" meta '
-        "[IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]\n"
-        "\tannotation PBI_ResultType = Text\n", encoding="utf-8")
-    (d / "relationships.tmdl").write_text(relationships_tmdl(), encoding="utf-8")
-    for name, cols in TABLES.items():
-        (d / "tables" / f"{name}.tmdl").write_text(table_tmdl(name, cols), encoding="utf-8")
+    (sm / "model.bim").write_text(json.dumps(model_bim(), indent=2), encoding="utf-8")
 
     (rp / ".platform").write_text(platform_file("Report", "compass"), encoding="utf-8")
     (rp / "definition.pbir").write_text(json.dumps({
@@ -331,9 +341,8 @@ def main():
     print(f"PBIP written to {OUT}")
     print(f"  {len(TABLES)} tables, {len(RELATIONSHIPS)} relationships, "
           f"{n_measures} measures, {len(ROLES)} RLS roles, {len(PAGES)} pages")
-    print("Open compass.pbip in Power BI Desktop. If the DataFolder path "
-          "differs on this machine, edit it under Transform data -> "
-          "Manage parameters.")
+    print("Open compass.pbip in Power BI Desktop, then Home -> Refresh to load "
+          "data. Edit the DataFolder parameter if the repo lives elsewhere.")
 
 
 if __name__ == "__main__":

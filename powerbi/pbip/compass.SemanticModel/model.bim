@@ -1,0 +1,1895 @@
+{
+  "compatibilityLevel": 1600,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"dim_student\",\"dim_term\",\"dim_campus\",\"dim_program\",\"dim_unit\",\"dim_advisor\",\"fact_enrolment\",\"fact_engagement_week\",\"fact_case\",\"fact_alert\",\"mart_triage_current\",\"mart_retention_cohort\",\"mart_nbf_funding\",\"mart_seheef_activity\",\"mart_effectiveness_results\",\"mart_dq_summary\",\"mart_engagement_trend\",\"DataFolder\"]"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "DataFolder",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ],
+        "expression": "\"C:\\Users\\syari\\code\\compass\\data\\warehouse\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "e006dca2-b76d-402d-a3e5-45a85cf97c00"
+      }
+    ],
+    "relationships": [
+      {
+        "name": "rel01",
+        "fromColumn": "student_id",
+        "fromTable": "fact_enrolment",
+        "toColumn": "student_id",
+        "toTable": "dim_student"
+      },
+      {
+        "name": "rel02",
+        "fromColumn": "student_id",
+        "fromTable": "fact_engagement_week",
+        "toColumn": "student_id",
+        "toTable": "dim_student"
+      },
+      {
+        "name": "rel03",
+        "fromColumn": "student_id",
+        "fromTable": "fact_case",
+        "toColumn": "student_id",
+        "toTable": "dim_student"
+      },
+      {
+        "name": "rel04",
+        "fromColumn": "student_id",
+        "fromTable": "fact_alert",
+        "toColumn": "student_id",
+        "toTable": "dim_student"
+      },
+      {
+        "name": "rel05",
+        "fromColumn": "student_id",
+        "fromTable": "mart_triage_current",
+        "toColumn": "student_id",
+        "toTable": "dim_student"
+      },
+      {
+        "name": "rel06",
+        "fromColumn": "term_code",
+        "fromTable": "fact_enrolment",
+        "toColumn": "term_code",
+        "toTable": "dim_term"
+      },
+      {
+        "name": "rel07",
+        "fromColumn": "term_code",
+        "fromTable": "fact_engagement_week",
+        "toColumn": "term_code",
+        "toTable": "dim_term"
+      },
+      {
+        "name": "rel08",
+        "fromColumn": "term_code",
+        "fromTable": "fact_case",
+        "toColumn": "term_code",
+        "toTable": "dim_term"
+      },
+      {
+        "name": "rel09",
+        "fromColumn": "term_code",
+        "fromTable": "fact_alert",
+        "toColumn": "term_code",
+        "toTable": "dim_term"
+      },
+      {
+        "name": "rel10",
+        "fromColumn": "campus_code",
+        "fromTable": "fact_enrolment",
+        "toColumn": "campus_code",
+        "toTable": "dim_campus"
+      },
+      {
+        "name": "rel11",
+        "fromColumn": "unit_code",
+        "fromTable": "fact_enrolment",
+        "toColumn": "unit_code",
+        "toTable": "dim_unit"
+      },
+      {
+        "name": "rel12",
+        "fromColumn": "program_code",
+        "fromTable": "dim_student",
+        "toColumn": "program_code",
+        "toTable": "dim_program"
+      },
+      {
+        "name": "rel13",
+        "fromColumn": "advisor_id",
+        "fromTable": "fact_case",
+        "toColumn": "advisor_id",
+        "toTable": "dim_advisor"
+      },
+      {
+        "name": "rel14",
+        "fromColumn": "advisor_id",
+        "fromTable": "mart_triage_current",
+        "toColumn": "advisor_id",
+        "toTable": "dim_advisor"
+      }
+    ],
+    "roles": [
+      {
+        "name": "Manager",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "ac2459303dcc426599fb60de83f80c7b"
+          }
+        ],
+        "modelPermission": "read"
+      },
+      {
+        "name": "Advisor_ADV01",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "bc00e3b5ee064c078f7d5a0e0a755174"
+          }
+        ],
+        "modelPermission": "read",
+        "tablePermissions": [
+          {
+            "name": "dim_advisor",
+            "filterExpression": "[advisor_id] = \"ADV01\""
+          }
+        ]
+      },
+      {
+        "name": "Advisor_ADV09_Online",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "c93192f36599463987862c94628fc187"
+          }
+        ],
+        "modelPermission": "read",
+        "tablePermissions": [
+          {
+            "name": "dim_advisor",
+            "filterExpression": "[advisor_id] = \"ADV09\""
+          }
+        ]
+      }
+    ],
+    "sourceQueryCulture": "en-AU",
+    "tables": [
+      {
+        "name": "dim_student",
+        "columns": [
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "45610135-4f63-4058-9394-96dceca27ff7",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "first_name",
+            "dataType": "string",
+            "lineageTag": "d9daef62-65a0-4af4-9ffc-a482c60074c1",
+            "sourceColumn": "first_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "last_name",
+            "dataType": "string",
+            "lineageTag": "3419344a-6d8c-4af5-9510-dad8371c75b9",
+            "sourceColumn": "last_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "student_name",
+            "dataType": "string",
+            "lineageTag": "70662b32-13a3-4caf-b1fe-c443c22ff44a",
+            "sourceColumn": "student_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "dob",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "f740b988-f72f-4379-a21e-100adc7dba11",
+            "sourceColumn": "dob",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "gender",
+            "dataType": "string",
+            "lineageTag": "dbf8a625-16a4-4562-85ad-ec0935a35522",
+            "sourceColumn": "gender",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "citizenship",
+            "dataType": "string",
+            "lineageTag": "a24c31bf-662e-477e-af55-a799bd2302ae",
+            "sourceColumn": "citizenship",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "postcode",
+            "dataType": "string",
+            "lineageTag": "fccba334-1d2d-422c-8430-2d2a9006c2dc",
+            "sourceColumn": "postcode",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "state",
+            "dataType": "string",
+            "lineageTag": "b45e6c59-11e7-43de-946d-28bcc662e3f3",
+            "sourceColumn": "state",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "home_campus_code",
+            "dataType": "string",
+            "lineageTag": "d9823f48-e882-452d-b50a-cb704029200d",
+            "sourceColumn": "home_campus_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "program_code",
+            "dataType": "string",
+            "lineageTag": "a724c6ff-2758-4a66-928a-cedd1afe4818",
+            "sourceColumn": "program_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "commencing_term",
+            "dataType": "string",
+            "lineageTag": "c203bb1b-7e98-4e0f-bf7f-5368b289afa8",
+            "sourceColumn": "commencing_term",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "commencing_year",
+            "dataType": "int64",
+            "lineageTag": "0861ccd3-304b-45d5-9a67-429d91da9dde",
+            "sourceColumn": "commencing_year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "attendance_type",
+            "dataType": "string",
+            "lineageTag": "5946f1b1-c39f-4ce4-969b-8ca1190612ae",
+            "sourceColumn": "attendance_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "mode",
+            "dataType": "string",
+            "lineageTag": "b4be6b89-4aa6-4b05-ad93-0bd8f7f4c7ba",
+            "sourceColumn": "mode",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "age_group",
+            "dataType": "string",
+            "lineageTag": "bfb58fd5-d0af-46f1-b3d3-2902d4ba8271",
+            "sourceColumn": "age_group",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "basis_of_admission",
+            "dataType": "string",
+            "lineageTag": "801caa5e-c654-4ce2-8cfd-5c10f7c86cd9",
+            "sourceColumn": "basis_of_admission",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "atar",
+            "dataType": "double",
+            "lineageTag": "27867066-9327-43ae-8a30-41688527078a",
+            "sourceColumn": "atar",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "first_nations",
+            "dataType": "string",
+            "lineageTag": "0d788a48-9622-4694-a7e0-5e73ae1c035c",
+            "sourceColumn": "first_nations",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "disability",
+            "dataType": "string",
+            "lineageTag": "4867d1e6-0c0f-432c-ab12-e03fec9359ee",
+            "sourceColumn": "disability",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nesb",
+            "dataType": "string",
+            "lineageTag": "c5480b72-4bf8-4cfb-950c-ec10cb3ebfdf",
+            "sourceColumn": "nesb",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ses_quartile",
+            "dataType": "int64",
+            "lineageTag": "2797f7ce-aedd-404d-a3f2-caba9d55c6e5",
+            "sourceColumn": "ses_quartile",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "remoteness",
+            "dataType": "string",
+            "lineageTag": "71170752-9156-46ea-80f9-958c0029420f",
+            "sourceColumn": "remoteness",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "low_ses",
+            "dataType": "string",
+            "lineageTag": "04c67a70-efe9-45cd-a41c-b8fea0eb01c5",
+            "sourceColumn": "low_ses",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "regional_remote",
+            "dataType": "string",
+            "lineageTag": "14e76775-10c2-40c0-ba90-cc1e154497a2",
+            "sourceColumn": "regional_remote",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_equity_cohort",
+            "dataType": "string",
+            "lineageTag": "8ec47a4e-94b5-4891-8c01-ec4ab30e834a",
+            "sourceColumn": "nbf_equity_cohort",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_category",
+            "dataType": "string",
+            "lineageTag": "2c59b525-043e-4b0d-93cf-5355dddebd03",
+            "sourceColumn": "nbf_category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "student_status",
+            "dataType": "string",
+            "lineageTag": "e531056b-0063-4aee-8cf7-a2f5d10f652b",
+            "sourceColumn": "student_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "status_term",
+            "dataType": "string",
+            "lineageTag": "82359712-d215-443f-a500-7dfccba1d545",
+            "sourceColumn": "status_term",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "61230030-2b7c-42de-a5c7-ef3b6fdc3561",
+        "partitions": [
+          {
+            "name": "dim_student",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_student.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"student_id\", \"first_name\", \"last_name\", \"student_name\", \"dob\", \"gender\", \"citizenship\", \"postcode\", \"state\", \"home_campus_code\", \"program_code\", \"commencing_term\", \"commencing_year\", \"attendance_type\", \"mode\", \"age_group\", \"basis_of_admission\", \"atar\", \"first_nations\", \"disability\", \"nesb\", \"ses_quartile\", \"remoteness\", \"low_ses\", \"regional_remote\", \"nbf_equity_cohort\", \"nbf_category\", \"student_status\", \"status_term\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"student_id\", type text}, {\"first_name\", type text}, {\"last_name\", type text}, {\"student_name\", type text}, {\"dob\", type date}, {\"gender\", type text}, {\"citizenship\", type text}, {\"postcode\", type text}, {\"state\", type text}, {\"home_campus_code\", type text}, {\"program_code\", type text}, {\"commencing_term\", type text}, {\"commencing_year\", Int64.Type}, {\"attendance_type\", type text}, {\"mode\", type text}, {\"age_group\", type text}, {\"basis_of_admission\", type text}, {\"atar\", type number}, {\"first_nations\", type text}, {\"disability\", type text}, {\"nesb\", type text}, {\"ses_quartile\", Int64.Type}, {\"remoteness\", type text}, {\"low_ses\", type text}, {\"regional_remote\", type text}, {\"nbf_equity_cohort\", type text}, {\"nbf_category\", type text}, {\"student_status\", type text}, {\"status_term\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_term",
+        "columns": [
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "8e68b19c-c545-4ee4-b8c7-f40136d866d8",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "term_start",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "5b35579e-53ce-493b-a39b-b03db3e1a02a",
+            "sourceColumn": "term_start",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "census_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "84f13589-07ee-4693-97cb-4c7fdcd88226",
+            "sourceColumn": "census_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "teaching_weeks",
+            "dataType": "int64",
+            "lineageTag": "4e55cdac-3ca8-4d82-bad7-f302f617903a",
+            "sourceColumn": "teaching_weeks",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "year",
+            "dataType": "int64",
+            "lineageTag": "4079989e-54aa-4278-9ba9-4e41e73e6ded",
+            "sourceColumn": "year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "semester",
+            "dataType": "string",
+            "lineageTag": "5ec062d7-8445-4500-94b7-16688975a7be",
+            "sourceColumn": "semester",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "is_current",
+            "dataType": "boolean",
+            "lineageTag": "7abc3a00-1e1a-48d6-95ba-fefb840675ed",
+            "sourceColumn": "is_current",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f620a300-9701-4f72-af3d-4022724c926d",
+        "partitions": [
+          {
+            "name": "dim_term",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_term.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"term_code\", \"term_start\", \"census_date\", \"teaching_weeks\", \"year\", \"semester\", \"is_current\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"term_code\", type text}, {\"term_start\", type date}, {\"census_date\", type date}, {\"teaching_weeks\", Int64.Type}, {\"year\", Int64.Type}, {\"semester\", type text}, {\"is_current\", type logical}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_campus",
+        "columns": [
+          {
+            "name": "campus_code",
+            "dataType": "string",
+            "lineageTag": "f016ad38-2f23-4721-9896-8fa4a3385b26",
+            "sourceColumn": "campus_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "campus_name",
+            "dataType": "string",
+            "lineageTag": "14de4733-5dda-4bf3-ab29-690d1720d3d0",
+            "sourceColumn": "campus_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "state",
+            "dataType": "string",
+            "lineageTag": "d9f6d55e-e5f8-4fe8-adc8-47b31248036c",
+            "sourceColumn": "state",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "b4803572-0eae-40de-bb1d-716319fe3ae4",
+        "partitions": [
+          {
+            "name": "dim_campus",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_campus.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"campus_code\", \"campus_name\", \"state\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"campus_code\", type text}, {\"campus_name\", type text}, {\"state\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_program",
+        "columns": [
+          {
+            "name": "program_code",
+            "dataType": "string",
+            "lineageTag": "99bdeb13-fd0d-4af2-9af9-64605f034b98",
+            "sourceColumn": "program_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "program_name",
+            "dataType": "string",
+            "lineageTag": "1146c31b-041b-4c91-84ac-081c634dc721",
+            "sourceColumn": "program_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "field",
+            "dataType": "string",
+            "lineageTag": "05155ccb-05da-45c7-a3ae-b2a6eae8653d",
+            "sourceColumn": "field",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "6af4c371-336a-4ccb-9dd5-ac816219280d",
+        "partitions": [
+          {
+            "name": "dim_program",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_program.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"program_code\", \"program_name\", \"field\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"program_code\", type text}, {\"program_name\", type text}, {\"field\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_unit",
+        "columns": [
+          {
+            "name": "unit_code",
+            "dataType": "string",
+            "lineageTag": "1f60ccc5-0273-43b2-9aed-fd9ada8dbc5a",
+            "sourceColumn": "unit_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "unit_name",
+            "dataType": "string",
+            "lineageTag": "0ac0abee-31c7-449c-997b-b054197343cd",
+            "sourceColumn": "unit_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "program_code",
+            "dataType": "string",
+            "lineageTag": "eef7f733-c81c-4384-8556-068b897c42da",
+            "sourceColumn": "program_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "year_level",
+            "dataType": "int64",
+            "lineageTag": "02188ee5-b8c7-4d6f-8b17-2a9163668ced",
+            "sourceColumn": "year_level",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "eftsl",
+            "dataType": "double",
+            "lineageTag": "902716e4-a707-41aa-b79b-305c171d4530",
+            "sourceColumn": "eftsl",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "c1bb5076-223b-48c1-9d16-7560509bf34b",
+        "partitions": [
+          {
+            "name": "dim_unit",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_unit.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"unit_code\", \"unit_name\", \"program_code\", \"year_level\", \"eftsl\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"unit_code\", type text}, {\"unit_name\", type text}, {\"program_code\", type text}, {\"year_level\", Int64.Type}, {\"eftsl\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "dim_advisor",
+        "columns": [
+          {
+            "name": "advisor_id",
+            "dataType": "string",
+            "lineageTag": "a70905f5-0780-4f94-a5f4-ddcfa0f4830e",
+            "sourceColumn": "advisor_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "advisor_name",
+            "dataType": "string",
+            "lineageTag": "8a9946de-c43e-44d3-9a50-cb8279260d90",
+            "sourceColumn": "advisor_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "covered_campuses",
+            "dataType": "string",
+            "lineageTag": "dfc9a3b5-97c7-413c-afe6-8a3c1927b7ad",
+            "sourceColumn": "covered_campuses",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "83aecba7-e648-4243-bed3-69cf2caf8ed0",
+        "partitions": [
+          {
+            "name": "dim_advisor",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\dim_advisor.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"advisor_id\", \"advisor_name\", \"covered_campuses\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"advisor_id\", type text}, {\"advisor_name\", type text}, {\"covered_campuses\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_enrolment",
+        "columns": [
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "aea44dfe-36d1-425f-929d-0d28e205bde4",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "unit_code",
+            "dataType": "string",
+            "lineageTag": "858e5f26-b905-48b8-83f0-4e4b45d79910",
+            "sourceColumn": "unit_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "63bd02fb-202b-44d3-b02a-0772fca53c02",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "campus_code",
+            "dataType": "string",
+            "lineageTag": "125e2814-5681-4012-b713-4fd42a0f9559",
+            "sourceColumn": "campus_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "enrolment_status",
+            "dataType": "string",
+            "lineageTag": "97a0d27a-50ce-4e50-b871-20a6cb01bf26",
+            "sourceColumn": "enrolment_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "grade",
+            "dataType": "string",
+            "lineageTag": "7a7da8d8-349c-41c0-be6c-6d405d3df71e",
+            "sourceColumn": "grade",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "mark",
+            "dataType": "double",
+            "lineageTag": "d1de6bf6-61a5-4431-bfc0-727e45a66d0a",
+            "sourceColumn": "mark",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "eftsl",
+            "dataType": "double",
+            "lineageTag": "ed2593c4-1a6e-4ad1-88cf-31985cde394d",
+            "sourceColumn": "eftsl",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "census_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "94ba0d11-54e3-4034-9ddc-4bec36163a42",
+            "sourceColumn": "census_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "passed",
+            "dataType": "string",
+            "lineageTag": "286eb2d3-0cc7-427b-b860-518c22c651ed",
+            "sourceColumn": "passed",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "eftsl_certified",
+            "dataType": "double",
+            "lineageTag": "55952254-cb7c-48fc-adf5-f18f5dbed731",
+            "sourceColumn": "eftsl_certified",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "eftsl_passed",
+            "dataType": "double",
+            "lineageTag": "39803b01-dead-4a80-a7cb-2f228f0c2e0c",
+            "sourceColumn": "eftsl_passed",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "4c6d5571-ba15-4656-bb52-ca0b93b7d58a",
+        "measures": [
+          {
+            "name": "Headcount",
+            "expression": "DISTINCTCOUNT(fact_enrolment[student_id])",
+            "formatString": "#,0",
+            "lineageTag": "fd3a6f3c-cfdd-498f-b9fe-b5c01d652472"
+          },
+          {
+            "name": "EFTSL Certified",
+            "expression": "SUM(fact_enrolment[eftsl_certified])",
+            "formatString": "#,0.0",
+            "lineageTag": "caeaf411-896d-4bbf-99f4-2914378ea290"
+          },
+          {
+            "name": "EFTSL Passed",
+            "expression": "SUM(fact_enrolment[eftsl_passed])",
+            "formatString": "#,0.0",
+            "lineageTag": "accb486d-8706-4da4-bae3-6faadf45d123"
+          },
+          {
+            "name": "Success Rate",
+            "expression": "DIVIDE([EFTSL Passed], [EFTSL Certified])",
+            "formatString": "0.0%",
+            "lineageTag": "e50baa34-6f8a-4a75-8ea7-cc40b01b0fd9"
+          },
+          {
+            "name": "Average Mark",
+            "expression": "CALCULATE(AVERAGE(fact_enrolment[mark]), fact_enrolment[mark] >= 0, fact_enrolment[mark] <= 100)",
+            "formatString": "0.0",
+            "lineageTag": "2c137ab8-036b-4dd3-bdb7-c49f3cbf2f79"
+          },
+          {
+            "name": "Pre-Census Withdrawals",
+            "expression": "CALCULATE(COUNTROWS(fact_enrolment), fact_enrolment[enrolment_status] = \"Withdrawn pre-census\")",
+            "formatString": "#,0",
+            "lineageTag": "ac1aced1-8a71-4bf1-807a-1a8a4f8245b2"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_enrolment",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\fact_enrolment.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"student_id\", \"unit_code\", \"term_code\", \"campus_code\", \"enrolment_status\", \"grade\", \"mark\", \"eftsl\", \"census_date\", \"passed\", \"eftsl_certified\", \"eftsl_passed\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"student_id\", type text}, {\"unit_code\", type text}, {\"term_code\", type text}, {\"campus_code\", type text}, {\"enrolment_status\", type text}, {\"grade\", type text}, {\"mark\", type number}, {\"eftsl\", type number}, {\"census_date\", type date}, {\"passed\", type text}, {\"eftsl_certified\", type number}, {\"eftsl_passed\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_engagement_week",
+        "columns": [
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "e3268578-9956-4a97-933c-cec022d44dab",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "0d126b1a-415f-4652-b24c-411b19a85e3c",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_number",
+            "dataType": "int64",
+            "lineageTag": "cdfabe4f-26bd-4b36-8c17-b40bc53fd076",
+            "sourceColumn": "week_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_start",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "335f2612-c5de-4a04-a250-7ca1e41cbc0a",
+            "sourceColumn": "week_start",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "logins",
+            "dataType": "int64",
+            "lineageTag": "b1f99806-fa36-46d3-a580-2d57d25b0ed8",
+            "sourceColumn": "logins",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "page_views",
+            "dataType": "int64",
+            "lineageTag": "f7ad7600-1706-448e-aed2-5c570726c844",
+            "sourceColumn": "page_views",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "items_due",
+            "dataType": "int64",
+            "lineageTag": "a8c7eb63-d9f5-4143-8521-249928494d9c",
+            "sourceColumn": "items_due",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "submitted_on_time",
+            "dataType": "int64",
+            "lineageTag": "6d4f330d-11e4-4720-854d-0e0cb66b9c78",
+            "sourceColumn": "submitted_on_time",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "submitted_late",
+            "dataType": "int64",
+            "lineageTag": "72345d57-7202-48cb-88e2-033657f84419",
+            "sourceColumn": "submitted_late",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "missed",
+            "dataType": "int64",
+            "lineageTag": "32be4642-a9a1-418a-b756-8e7c10a1c427",
+            "sourceColumn": "missed",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "3692f59e-d222-41fe-8ced-01d0279cd2d9",
+        "measures": [
+          {
+            "name": "Avg Weekly Logins",
+            "expression": "AVERAGE(fact_engagement_week[logins])",
+            "formatString": "0.0",
+            "lineageTag": "0914eba4-7eb8-4d08-8338-fb50c71594c6"
+          },
+          {
+            "name": "Missed Item Rate",
+            "expression": "DIVIDE(SUM(fact_engagement_week[missed]), SUM(fact_engagement_week[items_due]))",
+            "formatString": "0.0%",
+            "lineageTag": "05f53b39-fae0-45a3-a511-9765422757c0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_engagement_week",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\fact_engagement_week.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"student_id\", \"term_code\", \"week_number\", \"week_start\", \"logins\", \"page_views\", \"items_due\", \"submitted_on_time\", \"submitted_late\", \"missed\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"student_id\", type text}, {\"term_code\", type text}, {\"week_number\", Int64.Type}, {\"week_start\", type date}, {\"logins\", Int64.Type}, {\"page_views\", Int64.Type}, {\"items_due\", Int64.Type}, {\"submitted_on_time\", Int64.Type}, {\"submitted_late\", Int64.Type}, {\"missed\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_case",
+        "columns": [
+          {
+            "name": "case_id",
+            "dataType": "string",
+            "lineageTag": "3ebc5024-483b-4666-ab93-07895fa57195",
+            "sourceColumn": "case_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "15150153-f354-4069-96d7-6445f6a85438",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "2ebd6a77-35df-49ea-ba91-3bfa14ce3fa4",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "opened_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "de01473c-2eba-429f-988a-108462400c30",
+            "sourceColumn": "opened_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "source",
+            "dataType": "string",
+            "lineageTag": "0557a4c6-9e07-4a97-9cfb-a265cd25766a",
+            "sourceColumn": "source",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "case_type",
+            "dataType": "string",
+            "lineageTag": "56fab19f-08ec-42e0-bfe5-946c973d2541",
+            "sourceColumn": "case_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "seheef_activity",
+            "dataType": "string",
+            "lineageTag": "6115da23-b0a1-4253-a43e-08986eaea3de",
+            "sourceColumn": "seheef_activity",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "seheef_life_stage",
+            "dataType": "string",
+            "lineageTag": "552f00e9-8f69-4874-b622-a40207783765",
+            "sourceColumn": "seheef_life_stage",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "advisor_id",
+            "dataType": "string",
+            "lineageTag": "42ba1800-9590-48f5-b0c5-3f30601e4fe4",
+            "sourceColumn": "advisor_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "contact_channel",
+            "dataType": "string",
+            "lineageTag": "83a9f1d4-36b3-47c0-a244-34c480006f52",
+            "sourceColumn": "contact_channel",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "contact_outcome",
+            "dataType": "string",
+            "lineageTag": "6ce1eb05-f2e5-4f93-a4a7-4a490e48601c",
+            "sourceColumn": "contact_outcome",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "status",
+            "dataType": "string",
+            "lineageTag": "8994634c-641c-4eae-bbca-6e3cb22ed68e",
+            "sourceColumn": "status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "closed_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "a92de16a-5011-4435-96e7-c718cca19496",
+            "sourceColumn": "closed_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "days_open",
+            "dataType": "int64",
+            "lineageTag": "86ae49dd-5eee-4978-b8d0-9f9791c1066a",
+            "sourceColumn": "days_open",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "linked_alert_id",
+            "dataType": "string",
+            "lineageTag": "856676bc-8049-4eac-88fb-893bdf0cc520",
+            "sourceColumn": "linked_alert_id",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "36670fbf-66fc-46c6-86fd-94fbb7c22fa6",
+        "measures": [
+          {
+            "name": "Cases Opened",
+            "expression": "COUNTROWS(fact_case)",
+            "formatString": "#,0",
+            "lineageTag": "12d0f78c-be6c-4ed1-8371-2bb1d67f573f"
+          },
+          {
+            "name": "Reach Rate",
+            "expression": "DIVIDE(CALCULATE(COUNTROWS(fact_case), SEARCH(\"Reached\", fact_case[contact_outcome], 1, 0) > 0), CALCULATE(COUNTROWS(fact_case), fact_case[source] = \"Early alert\"))",
+            "formatString": "0.0%",
+            "lineageTag": "bb38c8f8-b946-4d82-abbe-3eee9d85c966"
+          },
+          {
+            "name": "Median Days Case Open",
+            "expression": "MEDIAN(fact_case[days_open])",
+            "formatString": "0.0",
+            "lineageTag": "fa011063-e7c6-4742-bd52-844fe3fd71db"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_case",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\fact_case.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"case_id\", \"student_id\", \"term_code\", \"opened_date\", \"source\", \"case_type\", \"seheef_activity\", \"seheef_life_stage\", \"advisor_id\", \"contact_channel\", \"contact_outcome\", \"status\", \"closed_date\", \"days_open\", \"linked_alert_id\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"case_id\", type text}, {\"student_id\", type text}, {\"term_code\", type text}, {\"opened_date\", type date}, {\"source\", type text}, {\"case_type\", type text}, {\"seheef_activity\", type text}, {\"seheef_life_stage\", type text}, {\"advisor_id\", type text}, {\"contact_channel\", type text}, {\"contact_outcome\", type text}, {\"status\", type text}, {\"closed_date\", type date}, {\"days_open\", Int64.Type}, {\"linked_alert_id\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "fact_alert",
+        "columns": [
+          {
+            "name": "alert_id",
+            "dataType": "string",
+            "lineageTag": "56a21303-1277-47ec-afe0-c48027b2c445",
+            "sourceColumn": "alert_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "e5e12477-86e2-435d-918e-9eeca826d650",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "5c9be78e-d105-47ec-935f-0c90c901089a",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_number",
+            "dataType": "int64",
+            "lineageTag": "fca85ae8-1fa0-4451-8e25-f536e8404c6c",
+            "sourceColumn": "week_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "raised_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "ba75c88c-f88b-492f-a106-51dbd671376e",
+            "sourceColumn": "raised_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "reason_code",
+            "dataType": "string",
+            "lineageTag": "f3d2483e-b82f-44c2-98d2-c50744995f1d",
+            "sourceColumn": "reason_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "actioned_case_id",
+            "dataType": "string",
+            "lineageTag": "0605b4c5-1ff6-4cc1-9c6d-a09c867d081a",
+            "sourceColumn": "actioned_case_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "actioned_date",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "0535d7a1-e8aa-4dc1-a24c-998ef935361c",
+            "sourceColumn": "actioned_date",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "contact_outcome",
+            "dataType": "string",
+            "lineageTag": "c30ce184-80f4-4d4a-ba3f-3c0c7b6b3d40",
+            "sourceColumn": "contact_outcome",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "case_status",
+            "dataType": "string",
+            "lineageTag": "fd1a0c9b-5cdc-436e-bc55-f34f49daea45",
+            "sourceColumn": "case_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "lifecycle_status",
+            "dataType": "string",
+            "lineageTag": "110fcf26-16d6-4e5e-b239-ab4aec10e08b",
+            "sourceColumn": "lifecycle_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "days_to_action",
+            "dataType": "int64",
+            "lineageTag": "9e0ac21b-a7c8-4a0e-852d-69a4d301af12",
+            "sourceColumn": "days_to_action",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "5f356d46-e2ef-43de-8451-c625ec93307e",
+        "measures": [
+          {
+            "name": "Alerts Raised",
+            "expression": "COUNTROWS(fact_alert)",
+            "formatString": "#,0",
+            "lineageTag": "36fe591a-fe46-4219-ad61-19edfdac6094"
+          },
+          {
+            "name": "Alerts Actioned",
+            "expression": "CALCULATE(COUNTROWS(fact_alert), fact_alert[lifecycle_status] IN {\"Actioned - case opened\", \"Covered by same-term case\"})",
+            "formatString": "#,0",
+            "lineageTag": "7aa977bf-7030-4148-b4e4-41405834f3ff"
+          },
+          {
+            "name": "Alert Action Rate",
+            "expression": "DIVIDE([Alerts Actioned], [Alerts Raised])",
+            "formatString": "0.0%",
+            "lineageTag": "fae16bc2-2154-4758-9b4f-c05414cd4955"
+          },
+          {
+            "name": "Median Days To Action",
+            "expression": "MEDIAN(fact_alert[days_to_action])",
+            "formatString": "0.0",
+            "lineageTag": "bf4031da-893e-485c-bfdf-efaacc072ba2"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_alert",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\fact_alert.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"alert_id\", \"student_id\", \"term_code\", \"week_number\", \"raised_date\", \"reason_code\", \"actioned_case_id\", \"actioned_date\", \"contact_outcome\", \"case_status\", \"lifecycle_status\", \"days_to_action\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"alert_id\", type text}, {\"student_id\", type text}, {\"term_code\", type text}, {\"week_number\", Int64.Type}, {\"raised_date\", type date}, {\"reason_code\", type text}, {\"actioned_case_id\", type text}, {\"actioned_date\", type date}, {\"contact_outcome\", type text}, {\"case_status\", type text}, {\"lifecycle_status\", type text}, {\"days_to_action\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_triage_current",
+        "columns": [
+          {
+            "name": "student_id",
+            "dataType": "string",
+            "lineageTag": "7f3a6fb1-7f75-47ca-a0bd-5ac6d0a7da23",
+            "sourceColumn": "student_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "student_name",
+            "dataType": "string",
+            "lineageTag": "3a9a160c-62c0-49f5-be16-8d06294636db",
+            "sourceColumn": "student_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "program_code",
+            "dataType": "string",
+            "lineageTag": "bd062391-ad5c-40e4-911a-32dd3a9f9043",
+            "sourceColumn": "program_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "program_name",
+            "dataType": "string",
+            "lineageTag": "5bdb3c71-695c-46b2-b716-331acbc776fa",
+            "sourceColumn": "program_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "home_campus_code",
+            "dataType": "string",
+            "lineageTag": "6dc2640a-fdcb-4853-82ad-015321c5a284",
+            "sourceColumn": "home_campus_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "mode",
+            "dataType": "string",
+            "lineageTag": "b14e82c9-c5f1-444c-ad3d-15fc89123583",
+            "sourceColumn": "mode",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "attendance_type",
+            "dataType": "string",
+            "lineageTag": "a3aa1f5e-005e-4938-b1c8-baf0888e4952",
+            "sourceColumn": "attendance_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_equity_cohort",
+            "dataType": "string",
+            "lineageTag": "9b72fb9a-6ddb-4fb3-8735-ecbddba278aa",
+            "sourceColumn": "nbf_equity_cohort",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "first_nations",
+            "dataType": "string",
+            "lineageTag": "4ad8e89d-970b-4f6d-bde9-da995dd30201",
+            "sourceColumn": "first_nations",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "disability",
+            "dataType": "string",
+            "lineageTag": "eef81573-5272-456f-9c33-966312bc070d",
+            "sourceColumn": "disability",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "is_commencing",
+            "dataType": "string",
+            "lineageTag": "ea597fbb-2e46-4283-b9f3-c560b03a3374",
+            "sourceColumn": "is_commencing",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "first_alert_week",
+            "dataType": "int64",
+            "lineageTag": "839c3bda-ea2e-4fcc-a38c-2eb418b97d68",
+            "sourceColumn": "first_alert_week",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "latest_alert_week",
+            "dataType": "int64",
+            "lineageTag": "e7a8e151-d9ea-4566-a01f-2494b8256305",
+            "sourceColumn": "latest_alert_week",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "alert_count",
+            "dataType": "int64",
+            "lineageTag": "c4d9c971-5af5-4186-b413-af3f424ce526",
+            "sourceColumn": "alert_count",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "reasons",
+            "dataType": "string",
+            "lineageTag": "6fe0f113-2027-430c-bae6-66b1225e7d5d",
+            "sourceColumn": "reasons",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "contacted",
+            "dataType": "int64",
+            "lineageTag": "182f87c0-f42d-4ede-8ac7-5011dad27fae",
+            "sourceColumn": "contacted",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "case_status",
+            "dataType": "string",
+            "lineageTag": "7ff31aaa-972c-4f49-ab79-3fc95a062ac4",
+            "sourceColumn": "case_status",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "contact_outcome",
+            "dataType": "string",
+            "lineageTag": "82b2fe15-1e87-4283-9cef-72df5923f12d",
+            "sourceColumn": "contact_outcome",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "logins_last2wk",
+            "dataType": "int64",
+            "lineageTag": "f80f6827-9b89-4911-a471-0e1d864be4b4",
+            "sourceColumn": "logins_last2wk",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "missed_last2wk",
+            "dataType": "int64",
+            "lineageTag": "4df3a0a3-3fb6-4955-9946-3295572325a7",
+            "sourceColumn": "missed_last2wk",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "priority_tier",
+            "dataType": "string",
+            "lineageTag": "910963d6-3481-4754-b8e8-5ed167635026",
+            "sourceColumn": "priority_tier",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "advisor_id",
+            "dataType": "string",
+            "lineageTag": "9f40d5ed-9b55-4b76-8164-946f14710a2d",
+            "sourceColumn": "advisor_id",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "c8cc672c-4bff-4aad-976d-581bd4efffd3",
+        "measures": [
+          {
+            "name": "Students On Triage List",
+            "expression": "DISTINCTCOUNT(mart_triage_current[student_id])",
+            "formatString": "#,0",
+            "lineageTag": "eb609dd8-0693-4de0-837e-63a2a3dd1578"
+          },
+          {
+            "name": "P1 Students",
+            "expression": "CALCULATE(DISTINCTCOUNT(mart_triage_current[student_id]), LEFT(mart_triage_current[priority_tier], 2) = \"P1\")",
+            "formatString": "#,0",
+            "lineageTag": "d5ec9833-a4f2-44a8-a288-d5ecc7e468ab"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "mart_triage_current",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_triage_current.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"student_id\", \"student_name\", \"program_code\", \"program_name\", \"home_campus_code\", \"mode\", \"attendance_type\", \"nbf_equity_cohort\", \"first_nations\", \"disability\", \"is_commencing\", \"first_alert_week\", \"latest_alert_week\", \"alert_count\", \"reasons\", \"contacted\", \"case_status\", \"contact_outcome\", \"logins_last2wk\", \"missed_last2wk\", \"priority_tier\", \"advisor_id\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"student_id\", type text}, {\"student_name\", type text}, {\"program_code\", type text}, {\"program_name\", type text}, {\"home_campus_code\", type text}, {\"mode\", type text}, {\"attendance_type\", type text}, {\"nbf_equity_cohort\", type text}, {\"first_nations\", type text}, {\"disability\", type text}, {\"is_commencing\", type text}, {\"first_alert_week\", Int64.Type}, {\"latest_alert_week\", Int64.Type}, {\"alert_count\", Int64.Type}, {\"reasons\", type text}, {\"contacted\", Int64.Type}, {\"case_status\", type text}, {\"contact_outcome\", type text}, {\"logins_last2wk\", Int64.Type}, {\"missed_last2wk\", Int64.Type}, {\"priority_tier\", type text}, {\"advisor_id\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_retention_cohort",
+        "columns": [
+          {
+            "name": "cohort",
+            "dataType": "string",
+            "lineageTag": "bb778943-92df-431a-994b-aaec55e7477a",
+            "sourceColumn": "cohort",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "commencing_year",
+            "dataType": "int64",
+            "lineageTag": "10144712-6bed-4773-ae78-eae232582521",
+            "sourceColumn": "commencing_year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "students",
+            "dataType": "int64",
+            "lineageTag": "a5b75188-1d71-4f38-a0ec-55b71e873daa",
+            "sourceColumn": "students",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "retention_rate",
+            "dataType": "double",
+            "lineageTag": "199072ea-1b3f-4d6b-811c-3839fce8fe7d",
+            "sourceColumn": "retention_rate",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "0f0004ff-99b7-4c6a-9a2a-5d0b7482c26d",
+        "measures": [
+          {
+            "name": "Retention Rate",
+            "expression": "AVERAGE(mart_retention_cohort[retention_rate])",
+            "formatString": "0.0%",
+            "lineageTag": "0a31536f-13ab-4ba0-b327-7fdedd18437b"
+          },
+          {
+            "name": "Retention Gap vs Non-Equity",
+            "expression": "VAR NonEq = CALCULATE(AVERAGE(mart_retention_cohort[retention_rate]), mart_retention_cohort[cohort] = \"Non-equity\", REMOVEFILTERS(mart_retention_cohort[cohort])) RETURN AVERAGE(mart_retention_cohort[retention_rate]) - NonEq",
+            "formatString": "+0.0%;-0.0%;0.0%",
+            "lineageTag": "87a143fe-666a-4825-ab3a-46441d90dfba"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "mart_retention_cohort",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_retention_cohort.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"cohort\", \"commencing_year\", \"students\", \"retention_rate\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"cohort\", type text}, {\"commencing_year\", Int64.Type}, {\"students\", Int64.Type}, {\"retention_rate\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_nbf_funding",
+        "columns": [
+          {
+            "name": "commencing_year",
+            "dataType": "int64",
+            "lineageTag": "aa5f6a0c-6b7d-4be2-939b-92a53e3e840c",
+            "sourceColumn": "commencing_year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_category",
+            "dataType": "string",
+            "lineageTag": "78a6bcf6-f83e-4cb6-92c2-e20c13b82fc9",
+            "sourceColumn": "nbf_category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "indicative_rate",
+            "dataType": "int64",
+            "lineageTag": "e6484095-a795-408b-a736-d35e12d41cda",
+            "sourceColumn": "indicative_rate",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "commencing_students",
+            "dataType": "int64",
+            "lineageTag": "1bff02ee-bd70-48aa-9e81-2983b4152cf1",
+            "sourceColumn": "commencing_students",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "indicative_funding",
+            "dataType": "int64",
+            "lineageTag": "6513d6b0-f601-47f5-a2b4-aa8ff1dd1e91",
+            "sourceColumn": "indicative_funding",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "students_with_support_case",
+            "dataType": "int64",
+            "lineageTag": "c299eb75-6ebb-4848-9c6c-ee228cd76d6e",
+            "sourceColumn": "students_with_support_case",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "support_coverage",
+            "dataType": "double",
+            "lineageTag": "11c369d9-3c37-4e43-a7cb-2646364fd099",
+            "sourceColumn": "support_coverage",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "ab2f4b20-c84e-4e73-a2f6-f89c716d7432",
+        "measures": [
+          {
+            "name": "NBF Indicative Funding",
+            "expression": "SUM(mart_nbf_funding[indicative_funding])",
+            "formatString": "\"$\"#,0",
+            "lineageTag": "43cab53a-dea6-4a8d-8895-f7b6c06db910"
+          },
+          {
+            "name": "NBF Commencing Students",
+            "expression": "SUM(mart_nbf_funding[commencing_students])",
+            "formatString": "#,0",
+            "lineageTag": "6444f85c-53f5-4191-9132-c9e7fc7dda65"
+          },
+          {
+            "name": "NBF Support Coverage",
+            "expression": "DIVIDE(SUM(mart_nbf_funding[students_with_support_case]), SUM(mart_nbf_funding[commencing_students]))",
+            "formatString": "0.0%",
+            "lineageTag": "3ef397d0-9a2b-42e9-8922-9449b752969a"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "mart_nbf_funding",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_nbf_funding.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"commencing_year\", \"nbf_category\", \"indicative_rate\", \"commencing_students\", \"indicative_funding\", \"students_with_support_case\", \"support_coverage\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"commencing_year\", Int64.Type}, {\"nbf_category\", type text}, {\"indicative_rate\", Int64.Type}, {\"commencing_students\", Int64.Type}, {\"indicative_funding\", Int64.Type}, {\"students_with_support_case\", Int64.Type}, {\"support_coverage\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_seheef_activity",
+        "columns": [
+          {
+            "name": "year",
+            "dataType": "int64",
+            "lineageTag": "018228d5-d81c-4051-a6a5-1f438ee0080f",
+            "sourceColumn": "year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "seheef_activity",
+            "dataType": "string",
+            "lineageTag": "af153baf-59be-4d6b-9f53-8fcb628f647c",
+            "sourceColumn": "seheef_activity",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "seheef_life_stage",
+            "dataType": "string",
+            "lineageTag": "d7e9d4e8-e4e5-4319-8ee0-2362ef8640af",
+            "sourceColumn": "seheef_life_stage",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "case_type",
+            "dataType": "string",
+            "lineageTag": "947050c1-858d-4207-bc79-0e19d230ac06",
+            "sourceColumn": "case_type",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_equity_cohort",
+            "dataType": "string",
+            "lineageTag": "61c5bffd-c9a6-4367-8729-c7248cb496a0",
+            "sourceColumn": "nbf_equity_cohort",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "cases",
+            "dataType": "int64",
+            "lineageTag": "5f11e529-7b92-4731-aa50-2ab48c973eda",
+            "sourceColumn": "cases",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "students",
+            "dataType": "int64",
+            "lineageTag": "d1290b22-0e08-4ff4-ae67-07b136b88df1",
+            "sourceColumn": "students",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "reach_rate",
+            "dataType": "double",
+            "lineageTag": "31e856b9-e222-41a9-a67e-6745cb865954",
+            "sourceColumn": "reach_rate",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "beba62ec-94bb-4a22-8233-772ef5b82e31",
+        "partitions": [
+          {
+            "name": "mart_seheef_activity",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_seheef_activity.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"year\", \"seheef_activity\", \"seheef_life_stage\", \"case_type\", \"nbf_equity_cohort\", \"cases\", \"students\", \"reach_rate\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"year\", Int64.Type}, {\"seheef_activity\", type text}, {\"seheef_life_stage\", type text}, {\"case_type\", type text}, {\"nbf_equity_cohort\", type text}, {\"cases\", Int64.Type}, {\"students\", Int64.Type}, {\"reach_rate\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_effectiveness_results",
+        "columns": [
+          {
+            "name": "estimator",
+            "dataType": "string",
+            "lineageTag": "43c3283f-3cc9-4cb6-996c-d9dd0d1da749",
+            "sourceColumn": "estimator",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "estimate_pp",
+            "dataType": "double",
+            "lineageTag": "1d8fb6df-8b7d-4ffa-8787-770c377ba643",
+            "sourceColumn": "estimate_pp",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ci_low_pp",
+            "dataType": "double",
+            "lineageTag": "7d107e14-f6c9-4608-b4c1-138eab99d3d7",
+            "sourceColumn": "ci_low_pp",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ci_high_pp",
+            "dataType": "double",
+            "lineageTag": "a261dd24-ac36-4908-857a-ff8f62ab0c6d",
+            "sourceColumn": "ci_high_pp",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "note",
+            "dataType": "string",
+            "lineageTag": "dd23aa68-6401-4a43-8d37-47cf7ac4cc74",
+            "sourceColumn": "note",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "b03339e0-2be4-456e-ba5e-5f1c83e06701",
+        "partitions": [
+          {
+            "name": "mart_effectiveness_results",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_effectiveness_results.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"estimator\", \"estimate_pp\", \"ci_low_pp\", \"ci_high_pp\", \"note\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"estimator\", type text}, {\"estimate_pp\", type number}, {\"ci_low_pp\", type number}, {\"ci_high_pp\", type number}, {\"note\", type text}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_dq_summary",
+        "columns": [
+          {
+            "name": "rule_id",
+            "dataType": "string",
+            "lineageTag": "76155ee3-ef8d-48a2-935f-d5c004383c5b",
+            "sourceColumn": "rule_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "severity",
+            "dataType": "string",
+            "lineageTag": "8c24c263-ccd0-4bc2-b013-51fd4160d678",
+            "sourceColumn": "severity",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "table_name",
+            "dataType": "string",
+            "lineageTag": "867d1a24-1e6c-47cd-82b1-55349085249e",
+            "sourceColumn": "table_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "issues",
+            "dataType": "int64",
+            "lineageTag": "5d3188ff-2076-453b-a09e-dc2535b7709f",
+            "sourceColumn": "issues",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "b5282517-172e-4f60-8d85-144b724c3c31",
+        "partitions": [
+          {
+            "name": "mart_dq_summary",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_dq_summary.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"rule_id\", \"severity\", \"table_name\", \"issues\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"rule_id\", type text}, {\"severity\", type text}, {\"table_name\", type text}, {\"issues\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "mart_engagement_trend",
+        "columns": [
+          {
+            "name": "term_code",
+            "dataType": "string",
+            "lineageTag": "8012ac54-ccd5-4807-bdfa-0e443f74b1f3",
+            "sourceColumn": "term_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "week_number",
+            "dataType": "int64",
+            "lineageTag": "995af7fd-9127-428b-b3da-5a05ea7463eb",
+            "sourceColumn": "week_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "mode",
+            "dataType": "string",
+            "lineageTag": "87b0cc30-6fc4-421e-b88c-987f1166a88c",
+            "sourceColumn": "mode",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "nbf_equity_cohort",
+            "dataType": "string",
+            "lineageTag": "e03fc841-db51-4658-95c8-43ac4c290e38",
+            "sourceColumn": "nbf_equity_cohort",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "students",
+            "dataType": "int64",
+            "lineageTag": "479ab90b-f2c5-4e79-af1c-05039fc7598f",
+            "sourceColumn": "students",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "avg_logins",
+            "dataType": "double",
+            "lineageTag": "844b321d-c839-4750-88cb-8e2b03a137fa",
+            "sourceColumn": "avg_logins",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "missed_rate",
+            "dataType": "double",
+            "lineageTag": "3bdaad73-485d-41d0-ad3b-9e44b769bcc9",
+            "sourceColumn": "missed_rate",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "b618b4ea-6db7-4c5d-8709-92abb9d612a3",
+        "partitions": [
+          {
+            "name": "mart_engagement_trend",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"\\mart_engagement_trend.csv\"), [Delimiter = \",\", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),",
+                "    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),",
+                "    Selected = Table.SelectColumns(Promoted, {\"term_code\", \"week_number\", \"mode\", \"nbf_equity_cohort\", \"students\", \"avg_logins\", \"missed_rate\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"term_code\", type text}, {\"week_number\", Int64.Type}, {\"mode\", type text}, {\"nbf_equity_cohort\", type text}, {\"students\", Int64.Type}, {\"avg_logins\", type number}, {\"missed_rate\", type number}})",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

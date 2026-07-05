@@ -1,2 +1,0 @@
-expression DataFolder = "C:\Users\syari\code\compass\data\warehouse" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	annotation PBI_ResultType = Text

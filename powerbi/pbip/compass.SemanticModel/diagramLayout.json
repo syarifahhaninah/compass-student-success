@@ -1,0 +1,226 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1212.397579538934,
+            "y": 1042.7480336349033
+          },
+          "nodeIndex": "dim_advisor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 100.82858126093902,
+            "y": 1421.261164443112
+          },
+          "nodeIndex": "dim_campus",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 976.84438675249089,
+            "y": 287.6088738440742
+          },
+          "nodeIndex": "dim_program",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 743.1396184159081,
+            "y": 495.38770803149146
+          },
+          "nodeIndex": "dim_student",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 526.20493376556669,
+            "y": 850.28854655795112
+          },
+          "nodeIndex": "dim_term",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 813.41819287491933
+          },
+          "nodeIndex": "dim_unit",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 427.41851768715878,
+            "y": 305.42356807758222
+          },
+          "nodeIndex": "fact_alert",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 922.43857310022508,
+            "y": 852.62230789654552
+          },
+          "nodeIndex": "fact_case",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 690.2650463477114,
+            "y": -50
+          },
+          "nodeIndex": "fact_engagement_week",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 236.32786923740991,
+            "y": 1069.2437640703408
+          },
+          "nodeIndex": "fact_enrolment",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1446.397579538934,
+            "y": 723.630582221556
+          },
+          "nodeIndex": "mart_dq_summary",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1730.397579538934,
+            "y": 711.630582221556
+          },
+          "nodeIndex": "mart_effectiveness_results",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2014.397579538934,
+            "y": 687.630582221556
+          },
+          "nodeIndex": "mart_engagement_trend",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2298.3975795389342,
+            "y": 661.630582221556
+          },
+          "nodeIndex": "mart_nbf_funding",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2582.3975795389342,
+            "y": 699.630582221556
+          },
+          "nodeIndex": "mart_retention_cohort",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2866.3975795389342,
+            "y": 675.630582221556
+          },
+          "nodeIndex": "mart_seheef_activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1212.3445251137737,
+            "y": 687.36606126306219
+          },
+          "nodeIndex": "mart_triage_current",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
