@@ -4,6 +4,8 @@
 
 Compass is a working prototype of the data environment described in the ACU *Data Analyst, Student Care and Success* position description: an end-to-end pipeline that integrates student information system, learning management system, and case-management data into a governed dimensional model powering advisor-facing early-alert triage, executive retention reporting, and Needs-based Funding (NBF) acquittal evidence.
 
+**▶ [Watch the 3½-minute walkthrough](https://github.com/syarifahhaninah/compass-student-success/releases/download/v1.0/compass-walkthrough-captioned.mp4)** — all five dashboard pages, including the live row-level-security switch.
+
 > **All data in this repository is synthetic.** It is generated to be statistically consistent with published Australian sector benchmarks (Department of Education Section 15 attrition/retention tables; ACSES retention analyses), but no real student, staff, or institutional record is used anywhere. Real student data is far too sensitive for a portfolio project — treating it that way is part of the point.
 
 ## Why this exists
@@ -95,6 +97,7 @@ generated project, fall back to the manual load in
 
 Built as code (`powerbi/build_report.py` emits every visual with its semantic
 query) and rendered in Power BI Desktop against the loaded model.
+**[Video walkthrough (3:25, captioned)](https://github.com/syarifahhaninah/compass-student-success/releases/download/v1.0/compass-walkthrough-captioned.mp4)** — produced from code too: see [powerbi/video/](powerbi/video/).
 
 | Page | The question it answers |
 |---|---|

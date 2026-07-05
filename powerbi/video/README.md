@@ -18,5 +18,6 @@ ffmpeg -y -i raw.mp4 -vf "crop=1920:1032:0:0,subtitles=captions.ass" -c:v libx26
 ```
 
 `raw.mp4` (uncaptioned) is kept locally for recording a voiceover version.
-MP4s are gitignored — host the final video (YouTube unlisted / Loom) and link
-it from the main README.
+MP4s are gitignored; the published copy is hosted as a
+[release asset](https://github.com/syarifahhaninah/compass-student-success/releases/download/v1.0/compass-walkthrough-captioned.mp4)
+on release v1.0.
