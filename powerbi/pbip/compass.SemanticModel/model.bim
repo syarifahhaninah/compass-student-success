@@ -1446,6 +1446,10 @@
             "expression": "CALCULATE(DISTINCTCOUNT(mart_triage_current[student_id]), LEFT(mart_triage_current[priority_tier], 2) = \"P1\")",
             "formatString": "#,0",
             "lineageTag": "d5ec9833-a4f2-44a8-a288-d5ecc7e468ab"
+          },
+          {
+            "name": "Tier Colour",
+            "expression": "SWITCH(LEFT(MIN(mart_triage_current[priority_tier]), 2), \"P1\", \"#F2B8B5\", \"P2\", \"#F7E1A0\", \"P3\", \"#BFE3DC\", \"#E6E6E6\")"
           }
         ],
         "partitions": [

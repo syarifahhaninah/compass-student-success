@@ -175,6 +175,10 @@ MEASURES = {
         ("P1 Students",
          'CALCULATE(DISTINCTCOUNT(mart_triage_current[student_id]), LEFT(mart_triage_current[priority_tier], 2) = "P1")',
          "#,0"),
+        # Drives conditional background formatting on the triage table
+        ("Tier Colour",
+         'SWITCH(LEFT(MIN(mart_triage_current[priority_tier]), 2), "P1", "#F2B8B5", "P2", "#F7E1A0", "P3", "#BFE3DC", "#E6E6E6")',
+         None),
     ],
     "fact_engagement_week": [
         ("Avg Weekly Logins", "AVERAGE(fact_engagement_week[logins])", "0.0"),

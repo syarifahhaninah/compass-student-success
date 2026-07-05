@@ -7,13 +7,21 @@ rewrites report.json; the semantic model and its data cache are untouched).
 
 Usage:  python powerbi/build_report.py
 Then :  open powerbi/pbip/compass.pbip in Power BI Desktop.
+
+WARNING: this regenerates the BASE layout. Polish applied interactively in
+Desktop afterwards (theme registration, conditional formatting on the triage
+priority tiers) lives in the saved report.json and will be overwritten if you
+re-run this script — re-apply per powerbi/page-guide.md, or don't re-run
+after polishing.
 """
 
 import json
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "powerbi" / "pbip" / "compass.Report" / "report.json"
+THEME = ROOT / "powerbi" / "theme.json"
 
 _counter = 0
 
@@ -54,17 +62,19 @@ def _select(field, alias):
     return {**expr, "Name": field["ref"]}
 
 
-def visual(vtype, x, y, w, h, roles, title=None):
-    """roles: {"Values": [field, ...], "Category": [...], ...}"""
+def visual(vtype, x, y, w, h, roles, title=None, objects=None, extra_selects=None):
+    """roles: {"Values": [field, ...], "Category": [...], ...}
+    extra_selects: fields added to the query but not projected (e.g. measures
+    that drive conditional formatting)."""
     tables = []
-    for fields in roles.values():
+    for fields in list(roles.values()) + [extra_selects or []]:
         for f in fields:
             if f["table"] not in tables:
                 tables.append(f["table"])
     alias = {t: f"t{i + 1}" for i, t in enumerate(tables)}
 
     selects, seen = [], set()
-    for fields in roles.values():
+    for fields in list(roles.values()) + [extra_selects or []]:
         for f in fields:
             if f["ref"] not in seen:
                 seen.add(f["ref"])
@@ -82,8 +92,11 @@ def visual(vtype, x, y, w, h, roles, title=None):
         },
         "drillFilterOtherVisuals": True,
     }
+    if objects:
+        single["objects"] = objects
     if title:
-        single["objects"] = {"title": [{"properties": {
+        # Visual-container-level properties (title) live in vcObjects.
+        single["vcObjects"] = {"title": [{"properties": {
             "text": {"expr": {"Literal": {"Value": f"'{title}'"}}},
             "show": {"expr": {"Literal": {"Value": "true"}}},
         }}]}
@@ -181,7 +194,14 @@ def page_triage():
                        col("mart_triage_current", "nbf_equity_cohort"),
                        col("mart_triage_current", "case_status"),
                        col("mart_triage_current", "advisor_id")],
-        }, title="Caseload — who to contact this week"),
+        }, title="Caseload — who to contact this week",
+            extra_selects=[mea("mart_triage_current", "Tier Colour")],
+            objects={"values": [{
+                "selector": {"metadata": "mart_triage_current.priority_tier"},
+                "properties": {"backColor": {"solid": {"color": {"expr": {
+                    "Measure": {"Expression": {"SourceRef": {"Entity": "mart_triage_current"}},
+                                "Property": "Tier Colour"}}}}}},
+            }]}),
         visual("slicer", 1042, 124, 222, 180, {
             "Values": [col("mart_triage_current", "priority_tier")],
         }),
@@ -276,9 +296,23 @@ def main():
             "config": "{}",
             "filters": json.dumps(page_filters) if page_filters else "[]",
         })
+    # Register the Compass theme as a report resource so it applies on open.
+    res_dir = REPORT.parent / "StaticResources" / "RegisteredResources"
+    res_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(THEME, res_dir / "compass-theme.json")
+
     doc = {
-        "config": json.dumps({"version": "5.43", "themeCollection": {}}),
+        "config": json.dumps({
+            "version": "5.43",
+            "themeCollection": {"customTheme": {
+                "name": "compass-theme.json", "type": "RegisteredResources"}},
+        }),
         "layoutOptimization": 0,
+        "resourcePackages": [{"resourcePackage": {
+            "name": "RegisteredResources", "type": 1, "disabled": False,
+            "items": [{"name": "compass-theme.json",
+                       "path": "compass-theme.json", "type": 202}],
+        }}],
         "sections": sections,
         "publicCustomVisuals": [],
     }

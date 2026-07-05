@@ -100,7 +100,8 @@ query) and rendered in Power BI Desktop against the loaded model.
 |---|---|
 | ![Executive](powerbi/screenshots/01-executive.png) | **Executive** — how are our students going? 89.2% success rate, on-campus vs online gap, program matrix |
 | ![Equity & NBF](powerbi/screenshots/02-equity-nbf.png) | **Equity & NBF** — $1.68M indicative 2026 funding by cohort; retention gaps in context; SEHEEF acquittal matrix generated from case data |
-| ![Advisor triage](powerbi/screenshots/03-advisor-triage.png) | **Advisor triage** — 4,096 students tiered P1–P4 with plain-language reasons; RLS-scoped caseloads |
+| ![Advisor triage](powerbi/screenshots/03-advisor-triage.png) | **Advisor triage** — 4,096 students tiered P1–P4 with plain-language reasons and tier colour-coding |
+| ![RLS advisor view](powerbi/screenshots/06-triage-rls-adv01.png) | **Row-level security, live** — the same page viewed as Advisor_ADV01: 925 students (her campuses only), P1s down to 135, advisor slicer reduced to her name. Managers see all; advisors see their caseload |
 | ![Effectiveness](powerbi/screenshots/04-effectiveness.png) | **Intervention effectiveness** — matched +4.9pp vs naive +3.4pp; method validated against injected ground truth |
 | ![Data quality](powerbi/screenshots/05-data-quality.png) | **Data quality** — every validation finding, quarantine counts, 100% catch rate vs the injected answer key |
 
