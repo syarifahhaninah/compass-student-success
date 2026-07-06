@@ -67,7 +67,7 @@ status, `days_open`, and `linked_alert_id` for the closed loop.
 **Marts** — one per dashboard question: `mart_executive`,
 `mart_retention_cohort`, `mart_nbf_funding`, `mart_seheef_activity`,
 `mart_triage_current`, `mart_effectiveness_input` (+ `_results`),
-`mart_dq_summary`, `mart_engagement_trend`.
+`mart_fairness_audit`, `mart_dq_summary`, `mart_engagement_trend`.
 
 **Quality layer** (`data/quality/`) — `dq_issues` (every validation finding),
 `rej_enrolments` (quarantine), `injected_defects` (the generator's answer key,
