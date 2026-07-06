@@ -84,6 +84,7 @@ python generator/generate.py          # writes data/raw/
 python etl/run_etl.py                 # writes data/warehouse/ + data/quality/
 python etl/validate_output.py         # sanity-check rates against sector benchmarks
 python etl/effectiveness.py           # naive vs matched intervention evaluation
+python etl/fairness_audit.py          # alert/outreach equity audit (the ethics note, tested)
 python powerbi/build_pbip.py          # emit the Power BI project (semantic model as code)
 ```
 
