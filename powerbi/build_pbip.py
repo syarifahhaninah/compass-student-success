@@ -90,7 +90,7 @@ TABLES = {
         ("commencing_year", I), ("nbf_category", S), ("indicative_rate", I),
         ("commencing_students", I), ("indicative_funding", I),
         ("students_with_support_case", I), ("support_coverage", D),
-    ],
+    ],  # support_coverage gets formatString 0.0% (see COLUMN_FORMATS)
     "mart_seheef_activity": [
         ("year", I), ("seheef_activity", S), ("seheef_life_stage", S),
         ("case_type", S), ("nbf_equity_cohort", S), ("cases", I),
@@ -108,6 +108,13 @@ TABLES = {
         ("nbf_equity_cohort", S), ("students", I), ("avg_logins", D),
         ("missed_rate", D),
     ],
+}
+
+COLUMN_FORMATS = {
+    ("mart_nbf_funding", "support_coverage"): "0.0%",
+    ("mart_retention_cohort", "retention_rate"): "0.0%",
+    ("mart_seheef_activity", "reach_rate"): "0.0%",
+    ("mart_engagement_trend", "missed_rate"): "0.0%",
 }
 
 # numeric columns that must not default-summarise (they are attributes)
@@ -237,10 +244,14 @@ def table_tom(name, cols):
         if typ in (I, D) and name.startswith(("fact_", "mart_")) \
                 and (name, col) not in NO_SUM:
             summarize = "sum"
-        columns.append({
+        c = {
             "name": col, "dataType": typ, "sourceColumn": col,
             "summarizeBy": summarize,
-        })
+        }
+        fmt = COLUMN_FORMATS.get((name, col))
+        if fmt:
+            c["formatString"] = fmt
+        columns.append(c)
     table = {
         "name": name,
         "columns": columns,

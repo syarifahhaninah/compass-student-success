@@ -16,6 +16,723 @@
       }
     ],
     "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Entities": {
+              "dim_advisor.advisor_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_advisor",
+                    "ConceptualProperty": "advisor_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Advisor": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "dim_campus.campus_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_campus",
+                    "ConceptualProperty": "campus_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Campus": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "dim_program.field": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_program",
+                    "ConceptualProperty": "field"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Discipline": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "dim_program.program_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_program",
+                    "ConceptualProperty": "program_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Program": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "dim_student.mode": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_student",
+                    "ConceptualProperty": "mode"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Mode": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "dim_term.term_code": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "dim_term",
+                    "ConceptualProperty": "term_code"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Term": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_dq_summary.rule_id": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_dq_summary",
+                    "ConceptualProperty": "rule_id"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Rule": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_dq_summary.severity": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_dq_summary",
+                    "ConceptualProperty": "severity"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Severity": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_dq_summary.table_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_dq_summary",
+                    "ConceptualProperty": "table_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Source table": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_effectiveness_results.estimator": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_effectiveness_results",
+                    "ConceptualProperty": "estimator"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Estimator": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_effectiveness_results.note": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_effectiveness_results",
+                    "ConceptualProperty": "note"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Note": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_engagement_trend.mode": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_engagement_trend",
+                    "ConceptualProperty": "mode"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Mode": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_engagement_trend.week_number": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_engagement_trend",
+                    "ConceptualProperty": "week_number"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Teaching week": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_nbf_funding.indicative_rate": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_nbf_funding",
+                    "ConceptualProperty": "indicative_rate"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Rate (AUD)": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_nbf_funding.nbf_category": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_nbf_funding",
+                    "ConceptualProperty": "nbf_category"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "NBF category": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_retention_cohort.cohort": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_retention_cohort",
+                    "ConceptualProperty": "cohort"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Cohort": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_retention_cohort.commencing_year": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_retention_cohort",
+                    "ConceptualProperty": "commencing_year"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Commencing year": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_seheef_activity.seheef_activity": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_seheef_activity",
+                    "ConceptualProperty": "seheef_activity"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "SEHEEF activity": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_seheef_activity.seheef_life_stage": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_seheef_activity",
+                    "ConceptualProperty": "seheef_life_stage"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Life stage": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_seheef_activity.year": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_seheef_activity",
+                    "ConceptualProperty": "year"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Year": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.advisor_id": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "advisor_id"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Advisor": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.case_status": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "case_status"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Case status": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.home_campus_code": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "home_campus_code"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Campus": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.latest_alert_week": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "latest_alert_week"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Latest wk": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.logins_last2wk": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "logins_last2wk"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Logins (2wk)": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.missed_last2wk": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "missed_last2wk"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Missed (2wk)": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.mode": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "mode"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Mode": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.nbf_equity_cohort": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "nbf_equity_cohort"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "NBF cohort": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.priority_tier": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "priority_tier"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Priority": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  },
+                  {
+                    "Priority tier": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.program_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "program_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Program": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.reasons": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "reasons"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Alert reasons": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.student_id": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "student_id"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "ID": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "mart_triage_current.student_name": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "mart_triage_current",
+                    "ConceptualProperty": "student_name"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "Student": {
+                      "Source": {
+                        "Agent": "PowerBI.VisualColumnRename",
+                        "Type": "External"
+                      },
+                      "State": "Suggested",
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              }
+            },
+            "Language": "en-US",
+            "Version": "2.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
     "dataAccessOptions": {
       "legacyRedirects": true,
       "returnErrorValuesAsNull": true
@@ -1449,7 +2166,8 @@
           },
           {
             "name": "Tier Colour",
-            "expression": "SWITCH(LEFT(MIN(mart_triage_current[priority_tier]), 2), \"P1\", \"#F2B8B5\", \"P2\", \"#F7E1A0\", \"P3\", \"#BFE3DC\", \"#E6E6E6\")"
+            "expression": "SWITCH(LEFT(MIN(mart_triage_current[priority_tier]), 2), \"P1\", \"#F2B8B5\", \"P2\", \"#F7E1A0\", \"P3\", \"#BFE3DC\", \"#E6E6E6\")",
+            "lineageTag": "94b81462-6d97-4d2f-81d4-473ec99a1783"
           }
         ],
         "partitions": [
@@ -1498,6 +2216,7 @@
           {
             "name": "retention_rate",
             "dataType": "double",
+            "formatString": "0.0%",
             "lineageTag": "199072ea-1b3f-4d6b-811c-3839fce8fe7d",
             "sourceColumn": "retention_rate",
             "summarizeBy": "sum"
@@ -1585,6 +2304,7 @@
           {
             "name": "support_coverage",
             "dataType": "double",
+            "formatString": "0.0%",
             "lineageTag": "11c369d9-3c37-4e43-a7cb-2646364fd099",
             "sourceColumn": "support_coverage",
             "summarizeBy": "sum"
@@ -1685,6 +2405,7 @@
           {
             "name": "reach_rate",
             "dataType": "double",
+            "formatString": "0.0%",
             "lineageTag": "31e856b9-e222-41a9-a67e-6745cb865954",
             "sourceColumn": "reach_rate",
             "summarizeBy": "sum"
@@ -1869,6 +2590,7 @@
           {
             "name": "missed_rate",
             "dataType": "double",
+            "formatString": "0.0%",
             "lineageTag": "3bdaad73-485d-41d0-ad3b-9e44b769bcc9",
             "sourceColumn": "missed_rate",
             "summarizeBy": "sum"

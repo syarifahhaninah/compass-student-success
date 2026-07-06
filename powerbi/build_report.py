@@ -2,17 +2,14 @@
 
 Writes powerbi/pbip/compass.Report/report.json (PBIR-legacy format) with all
 five pages of visuals: KPI cards, charts, tables, matrices and slicers, each
-with an explicit semantic query. Run AFTER build_pbip.py (this script only
-rewrites report.json; the semantic model and its data cache are untouched).
+with an explicit semantic query, friendly display names, the Compass theme
+(registered as a report resource) and conditional formatting on the triage
+priority tiers. Run AFTER build_pbip.py; this script only rewrites
+report.json + the theme resource — the semantic model and its data cache are
+untouched.
 
 Usage:  python powerbi/build_report.py
 Then :  open powerbi/pbip/compass.pbip in Power BI Desktop.
-
-WARNING: this regenerates the BASE layout. Polish applied interactively in
-Desktop afterwards (theme registration, conditional formatting on the triage
-priority tiers) lives in the saved report.json and will be overwritten if you
-re-run this script — re-apply per powerbi/page-guide.md, or don't re-run
-after polishing.
 """
 
 import json
@@ -22,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "powerbi" / "pbip" / "compass.Report" / "report.json"
 THEME = ROOT / "powerbi" / "theme.json"
+THEME_RESOURCE = "CompassTheme.json"
 
 _counter = 0
 
@@ -62,8 +60,10 @@ def _select(field, alias):
     return {**expr, "Name": field["ref"]}
 
 
-def visual(vtype, x, y, w, h, roles, title=None, objects=None, extra_selects=None):
+def visual(vtype, x, y, w, h, roles, title=None, objects=None,
+           extra_selects=None, display=None):
     """roles: {"Values": [field, ...], "Category": [...], ...}
+    display: {queryRef: friendly display name} rendered as columnProperties.
     extra_selects: fields added to the query but not projected (e.g. measures
     that drive conditional formatting)."""
     tables = []
@@ -92,10 +92,13 @@ def visual(vtype, x, y, w, h, roles, title=None, objects=None, extra_selects=Non
         },
         "drillFilterOtherVisuals": True,
     }
+    if display:
+        single["columnProperties"] = {
+            ref: {"displayName": name} for ref, name in display.items()
+        }
     if objects:
         single["objects"] = objects
     if title:
-        # Visual-container-level properties (title) live in vcObjects.
         single["vcObjects"] = {"title": [{"properties": {
             "text": {"expr": {"Literal": {"Value": f"'{title}'"}}},
             "show": {"expr": {"Literal": {"Value": "true"}}},
@@ -111,8 +114,34 @@ def visual(vtype, x, y, w, h, roles, title=None, objects=None, extra_selects=Non
             "config": json.dumps(config), "filters": "[]"}
 
 
-def card(x, y, w, h, field):
-    return visual("card", x, y, w, h, {"Values": [field]})
+def card(x, y, w, h, field, display_units=None, precision=None):
+    objects = None
+    if display_units is not None:
+        objects = {"labels": [{"properties": {
+            "labelDisplayUnits": {"expr": {"Literal": {"Value": f"{display_units}D"}}},
+            **({"labelPrecision": {"expr": {"Literal": {"Value": f"{precision}D"}}}}
+               if precision is not None else {}),
+        }}]}
+    return visual("card", x, y, w, h, {"Values": [field]}, objects=objects)
+
+
+# Conditional formatting on the triage priority column, exactly as Power BI
+# Desktop serialises field-value background formatting (dual selector).
+TIER_CF = {"values": [
+    {
+        "properties": {"backColor": {"solid": {"color": {"expr": {
+            "Measure": {"Expression": {"SourceRef": {"Entity": "mart_triage_current"}},
+                        "Property": "Tier Colour"}}}}}},
+        "selector": {"metadata": "mart_triage_current.priority_tier"},
+    },
+    {
+        "properties": {"backColor": {"solid": {"color": {"expr": {
+            "Measure": {"Expression": {"SourceRef": {"Entity": "mart_triage_current"}},
+                        "Property": "Tier Colour"}}}}}},
+        "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}],
+                     "metadata": "mart_triage_current.priority_tier"},
+    },
+]}
 
 
 # ----------------------------------------------------------------- pages --
@@ -127,50 +156,72 @@ def page_executive():
             "Category": [col("dim_term", "term_code")],
             "Y": [mea("fact_enrolment", "Success Rate")],
             "Series": [col("dim_student", "mode")],
-        }, title="Success rate by term — on-campus vs online"),
+        }, title="Success rate by term — on-campus vs online",
+            display={"dim_term.term_code": "Term", "dim_student.mode": "Mode"}),
         visual("clusteredBarChart", 652, 124, 612, 280, {
             "Category": [col("dim_campus", "campus_name")],
             "Y": [mea("fact_enrolment", "Success Rate")],
-        }, title="Success rate by campus"),
+        }, title="Success rate by campus",
+            display={"dim_campus.campus_name": "Campus"}),
         visual("pivotTable", 16, 420, 1248, 284, {
             "Rows": [col("dim_program", "field"), col("dim_program", "program_name")],
             "Values": [mea("fact_enrolment", "Headcount"),
                        mea("fact_enrolment", "Success Rate"),
                        mea("fact_enrolment", "Average Mark"),
                        mea("fact_enrolment", "Pre-Census Withdrawals")],
-        }, title="Program performance"),
+        }, title="Program performance",
+            display={"dim_program.field": "Discipline",
+                     "dim_program.program_name": "Program"}),
     ]
 
 
 def page_equity():
     return [
-        card(16, 16, 300, 92, mea("mart_nbf_funding", "NBF Indicative Funding")),
+        card(16, 16, 300, 92, mea("mart_nbf_funding", "NBF Indicative Funding"),
+             display_units=1000000, precision=2),
         card(332, 16, 300, 92, mea("mart_nbf_funding", "NBF Commencing Students")),
         card(648, 16, 300, 92, mea("mart_nbf_funding", "NBF Support Coverage")),
         card(964, 16, 300, 92, mea("fact_case", "Cases Opened")),
         visual("clusteredBarChart", 16, 124, 612, 280, {
             "Category": [col("mart_retention_cohort", "cohort")],
             "Y": [mea("mart_retention_cohort", "Retention Rate")],
-        }, title="Year-1 retention by cohort (gaps in context)"),
+        }, title="Year-1 retention by cohort (gaps in context)",
+            display={"mart_retention_cohort.cohort": "Cohort"}),
         visual("lineChart", 652, 124, 612, 280, {
             "Category": [col("mart_retention_cohort", "commencing_year")],
             "Y": [mea("mart_retention_cohort", "Retention Rate")],
             "Series": [col("mart_retention_cohort", "cohort")],
-        }, title="Retention trend by cohort"),
+        }, title="Retention trend by cohort",
+            display={"mart_retention_cohort.commencing_year": "Commencing year",
+                     "mart_retention_cohort.cohort": "Cohort"}),
         visual("tableEx", 16, 420, 612, 284, {
             "Values": [col("mart_nbf_funding", "nbf_category"),
                        agg("mart_nbf_funding", "commencing_students"),
                        col("mart_nbf_funding", "indicative_rate"),
                        agg("mart_nbf_funding", "indicative_funding"),
                        agg("mart_nbf_funding", "support_coverage", 1)],
-        }, title="NBF categories — indicative funding (AUD)"),
+        }, title="NBF categories — indicative funding (AUD)",
+            display={
+                "mart_nbf_funding.nbf_category": "NBF category",
+                "Sum(mart_nbf_funding.commencing_students)": "Commencing students",
+                "mart_nbf_funding.indicative_rate": "Rate (AUD)",
+                "Sum(mart_nbf_funding.indicative_funding)": "Indicative funding (AUD)",
+                "Avg(mart_nbf_funding.support_coverage)": "Support coverage",
+            }),
         visual("pivotTable", 652, 420, 612, 284, {
             "Rows": [col("mart_seheef_activity", "seheef_activity"),
                      col("mart_seheef_activity", "seheef_life_stage")],
             "Columns": [col("mart_seheef_activity", "year")],
             "Values": [agg("mart_seheef_activity", "cases"),
                        agg("mart_seheef_activity", "students")],
-        }, title="SEHEEF activity reporting — generated from case data"),
+        }, title="SEHEEF activity reporting — generated from case data",
+            display={
+                "mart_seheef_activity.seheef_activity": "SEHEEF activity",
+                "mart_seheef_activity.seheef_life_stage": "Life stage",
+                "mart_seheef_activity.year": "Year",
+                "Sum(mart_seheef_activity.cases)": "Cases",
+                "Sum(mart_seheef_activity.students)": "Students",
+            }),
     ]
 
 
@@ -196,22 +247,33 @@ def page_triage():
                        col("mart_triage_current", "advisor_id")],
         }, title="Caseload — who to contact this week",
             extra_selects=[mea("mart_triage_current", "Tier Colour")],
-            objects={"values": [{
-                "selector": {"metadata": "mart_triage_current.priority_tier"},
-                "properties": {"backColor": {"solid": {"color": {"expr": {
-                    "Measure": {"Expression": {"SourceRef": {"Entity": "mart_triage_current"}},
-                                "Property": "Tier Colour"}}}}}},
-            }]}),
+            objects=TIER_CF,
+            display={
+                "mart_triage_current.priority_tier": "Priority",
+                "mart_triage_current.student_name": "Student",
+                "mart_triage_current.student_id": "ID",
+                "mart_triage_current.program_name": "Program",
+                "mart_triage_current.home_campus_code": "Campus",
+                "mart_triage_current.mode": "Mode",
+                "mart_triage_current.reasons": "Alert reasons",
+                "mart_triage_current.latest_alert_week": "Latest wk",
+                "mart_triage_current.logins_last2wk": "Logins (2wk)",
+                "mart_triage_current.missed_last2wk": "Missed (2wk)",
+                "mart_triage_current.nbf_equity_cohort": "NBF cohort",
+                "mart_triage_current.case_status": "Case status",
+                "mart_triage_current.advisor_id": "Advisor",
+            }),
         visual("slicer", 1042, 124, 222, 180, {
             "Values": [col("mart_triage_current", "priority_tier")],
-        }),
+        }, display={"mart_triage_current.priority_tier": "Priority tier"}),
         visual("slicer", 1042, 316, 222, 180, {
             "Values": [col("dim_advisor", "advisor_name")],
-        }),
+        }, display={"dim_advisor.advisor_name": "Advisor"}),
         visual("clusteredBarChart", 1042, 508, 222, 196, {
             "Category": [col("mart_triage_current", "advisor_id")],
             "Y": [mea("mart_triage_current", "Students On Triage List")],
-        }, title="Caseload balance"),
+        }, title="Caseload balance",
+            display={"mart_triage_current.advisor_id": "Advisor"}),
     ]
 
 
@@ -223,16 +285,28 @@ def page_effectiveness():
                        agg("mart_effectiveness_results", "ci_low_pp"),
                        agg("mart_effectiveness_results", "ci_high_pp"),
                        col("mart_effectiveness_results", "note")],
-        }, title="Effect of outreach on next-term persistence (pp)"),
+        }, title="Effect of outreach on next-term persistence (pp)",
+            display={
+                "mart_effectiveness_results.estimator": "Estimator",
+                "Sum(mart_effectiveness_results.estimate_pp)": "Effect (pp)",
+                "Sum(mart_effectiveness_results.ci_low_pp)": "CI low",
+                "Sum(mart_effectiveness_results.ci_high_pp)": "CI high",
+                "mart_effectiveness_results.note": "Note",
+            }),
         visual("clusteredBarChart", 16, 212, 800, 300, {
             "Category": [col("mart_effectiveness_results", "estimator")],
             "Y": [agg("mart_effectiveness_results", "estimate_pp")],
-        }, title="Naive vs matched estimate — why method matters"),
+        }, title="Naive vs matched estimate — why method matters",
+            display={"mart_effectiveness_results.estimator": "Estimator",
+                     "Sum(mart_effectiveness_results.estimate_pp)": "Effect (pp)"}),
         visual("lineChart", 832, 16, 432, 496, {
             "Category": [col("mart_engagement_trend", "week_number")],
             "Y": [agg("mart_engagement_trend", "avg_logins", 1)],
             "Series": [col("mart_engagement_trend", "mode")],
-        }, title="Weekly engagement by mode"),
+        }, title="Weekly engagement by mode",
+            display={"mart_engagement_trend.week_number": "Teaching week",
+                     "Avg(mart_engagement_trend.avg_logins)": "Avg logins",
+                     "mart_engagement_trend.mode": "Mode"}),
         card(16, 528, 300, 92, mea("fact_alert", "Alerts Raised")),
         card(332, 528, 300, 92, mea("fact_alert", "Alerts Actioned")),
         card(648, 528, 300, 92, mea("fact_case", "Reach Rate")),
@@ -241,17 +315,25 @@ def page_effectiveness():
 
 def page_dq():
     return [
+        card(16, 16, 300, 92, agg("mart_dq_summary", "issues")),
         visual("tableEx", 16, 124, 612, 300, {
             "Values": [col("mart_dq_summary", "rule_id"),
                        col("mart_dq_summary", "severity"),
                        col("mart_dq_summary", "table_name"),
                        agg("mart_dq_summary", "issues")],
-        }, title="Validation findings by rule"),
+        }, title="Validation findings by rule",
+            display={
+                "mart_dq_summary.rule_id": "Rule",
+                "mart_dq_summary.severity": "Severity",
+                "mart_dq_summary.table_name": "Source table",
+                "Sum(mart_dq_summary.issues)": "Findings",
+            }),
         visual("clusteredBarChart", 652, 124, 612, 300, {
             "Category": [col("mart_dq_summary", "rule_id")],
             "Y": [agg("mart_dq_summary", "issues")],
-        }, title="Issues by rule"),
-        card(16, 16, 300, 92, agg("mart_dq_summary", "issues")),
+        }, title="Findings by rule",
+            display={"mart_dq_summary.rule_id": "Rule",
+                     "Sum(mart_dq_summary.issues)": "Findings"}),
     ]
 
 
@@ -288,30 +370,30 @@ PAGES = [
 
 def main():
     sections = []
-    for i, (display, builder, page_filters) in enumerate(PAGES):
+    for i, (display_name, builder, page_filters) in enumerate(PAGES):
         sections.append({
-            "name": f"page{i}", "displayName": display, "displayOption": 1,
+            "name": f"page{i}", "displayName": display_name, "displayOption": 1,
             "height": 720.0, "width": 1280.0,
             "visualContainers": builder(),
             "config": "{}",
             "filters": json.dumps(page_filters) if page_filters else "[]",
         })
-    # Register the Compass theme as a report resource so it applies on open.
+
+    # Register the Compass theme as a report resource (type codes as Power BI
+    # Desktop serialises them: resource item type 201, customTheme type 1).
     res_dir = REPORT.parent / "StaticResources" / "RegisteredResources"
     res_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy(THEME, res_dir / "compass-theme.json")
+    shutil.copy(THEME, res_dir / THEME_RESOURCE)
 
     doc = {
         "config": json.dumps({
-            "version": "5.43",
-            "themeCollection": {"customTheme": {
-                "name": "compass-theme.json", "type": "RegisteredResources"}},
+            "version": "5.66",
+            "themeCollection": {"customTheme": {"name": THEME_RESOURCE, "type": 1}},
         }),
         "layoutOptimization": 0,
         "resourcePackages": [{"resourcePackage": {
             "name": "RegisteredResources", "type": 1, "disabled": False,
-            "items": [{"name": "compass-theme.json",
-                       "path": "compass-theme.json", "type": 202}],
+            "items": [{"name": THEME_RESOURCE, "path": THEME_RESOURCE, "type": 201}],
         }}],
         "sections": sections,
         "publicCustomVisuals": [],
@@ -319,7 +401,7 @@ def main():
     REPORT.write_text(json.dumps(doc, indent=2), encoding="utf-8")
     n = sum(len(s["visualContainers"]) for s in sections)
     print(f"Wrote {REPORT}")
-    print(f"  {len(sections)} pages, {n} visuals")
+    print(f"  {len(sections)} pages, {n} visuals, theme + tier formatting included")
 
 
 if __name__ == "__main__":
