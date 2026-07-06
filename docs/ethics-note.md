@@ -10,7 +10,7 @@ Student-success analytics sits inside a duty of care. A university that watches 
 
 **3. Behaviour predicts; demographics never do.** Engagement and academic behaviour drive indicators. Equity attributes (First Nations status, SES, disability, regional/remote) are used only to contextualise support offers, weight funding accountability, and audit fairness — never as inputs to risk flags.
 
-**4. Fairness is audited in the open.** Alert rates, contact rates and post-contact outcomes are reported by equity cohort inside the reporting suite itself. Disparate impact should be discovered by the team, on purpose, before anyone else discovers it by accident.
+**4. Fairness is audited in the open.** Alert rates, contact rates and post-contact outcomes are reported by equity cohort inside the reporting suite itself. Disparate impact should be discovered by the team, on purpose, before anyone else discovers it by accident. *(Implemented: `etl/fairness_audit.py` → `mart_fairness_audit.csv` — alert rates track behavioural need; treatment given an alert is flat across cohorts, max gap 0.9pp.)*
 
 **5. A human decides; the system remembers.** Alerts prompt human judgment — they never trigger automated consequences. What the system does enforce is memory: every alert has a recorded outcome, because unactioned care is the sector's most common failure and an audit risk under the Support for Students Policy.
 
